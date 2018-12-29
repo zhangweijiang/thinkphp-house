@@ -1,0 +1,114 @@
+{extend name="public/base" /}
+{block name="style"}
+{/block}
+{block name="body"}
+    <div class="user-main container clearfix">
+        <div class="row">
+            <div class="main-left pull-left">
+                <div class="name">
+                    <img src="__UPLOAD__/{$data.user_img}">
+                </div>
+                <div class="user-name">欢迎你，{$data.username}</div>
+                <ul>
+                    <li class="active"><a href="{:url('pc/attention/index')}">关注的房源</a></li>
+                    <li><a href="{:url('pc/personal/index')}">编辑资料</a></li>
+                </ul>
+            </div>
+            <div class="main-right pull-right">
+                <div class="title" id="showTotal">共<span>{$attentionList|count}</span>套 关注房源</div>
+                <ul class="tab">
+                    <li class="active" data-target="ershoufang"><a href="javascript:">租房</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" data-target="ershoufang">
+                        <ul class="list-bot">
+                            {volist name="attentionList" id="vo"}
+                            <li>
+                                <div class="list">
+                                    <div class="pic-panel">
+                                        <a target="_blank" href="{:url('pc/rent_house/index')}?id={$vo.info.id}">
+                                            <img src="__UPLOAD__/{$vo.info.img}" onerror="this.src='https://s1.ljcdn.com/feroot/pc/asset/img/new-version/default_block.png?_v=20180223171650444';this.onerror=null;">
+                                        </a>
+                                    </div>
+                                    <div class="info-panel">
+                                        <h2>
+                                            <a target="_blank" href="{:url('pc/rent_house/index')}?id={$vo.info.id}">
+                                                {$vo.info.title}
+                                            </a>
+                                        </h2>
+                                        <div class="col-1">
+                                            <div class="where">
+                                                <a href="{:url('pc/rent_house/index')}?id={$vo.info.id}" target="_blank">
+                                                    <span class="region">{$vo.info.name}&nbsp;&nbsp;</span>
+                                                </a>
+                                                <span class="zone">
+                                                    <span>{$vo.info.type1}室{$vo.info.type2}厅</span>
+                                                </span>
+                                                <span class="meters">{$vo.info.acreage}平米</span>
+                                                <span>{$vo.info.direction}</span>
+                                            </div>
+                                            <div class="other">
+                                                <div class="con">
+                                                    {$vo.info.decoration}
+                                                    <span>/</span>
+                                                    {$vo.info.floor}(共{$vo.info.floor_count}层)
+                                                </div>
+                                            </div>
+                                            <div class="chanquan">
+                                                <div class="left agency">
+                                                    <div class="view-label left">
+                                                        <span class="taxfree"></span>
+                                                        <span class="taxfree-ex">
+                                                            <span>房本满五年</span>
+                                                        </span>
+                                                        <span class="haskey"></span>
+                                                        <span class="haskey-ex">
+                                                            <span>随时看房</span>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="price">
+                                                <span class="num">{$vo.info.money}</span>元/月
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a class="del-fav actDelFollow" id="cancelAttention" data-id="{$vo.info.id}">取消关注</a>
+                            </li>
+                            {/volist}
+                        </ul>
+                        {$attentionList->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="script"}
+<script>
+    //取消关注点击事件
+    $('#cancelAttention').click(function(){
+       var id = $(this).data('id');
+        $.ajax({
+            url:"{:url('pc/rent_house/cancel_attention')}",
+            type:"post",
+            data:{id:id},
+            dataType:"json",
+            success:function(data){
+                if(data.status==1){
+                    layer.msg('关注已取消', {icon: 1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }else{
+                    layer.msg('关注取消失败', {icon: 1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    });
+</script>
+{/block}

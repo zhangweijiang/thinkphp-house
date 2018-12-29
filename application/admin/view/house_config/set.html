@@ -1,0 +1,76 @@
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="custom-modal-text text-left" style="width:40%;">
+    <form role="form" id="form">
+        <input type="hidden" value="{$data.id|default=''}" name="id">
+
+        <div class="form-group">
+            <label for="controller">房屋配置名称</label>
+            <input type="text" class="form-control" id="controller" placeholder="请输入配置名称" name="name" required value="{$data.name|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="name">房屋配置图片</label>
+            <input type="file" class="form-control" id="filename" placeholder="请输入名称" required name="filename" value="">
+        </div>
+        <button type="submit" class="btn btn-default waves-effect waves-light" id="submit">保存</button>
+        <a  class="btn btn-danger waves-effect waves-light m-l-10"  href="/admin/house_config/index" data-loader="true" data-title="房屋配置列表">返回</a>
+    </form>
+</div>
+<!--===================================================-->
+<script>
+    /*表单提交*/
+    $('#submit').click(function(e){
+        e.preventDefault();
+        var name = $("input[name='name']").val();
+        if(name.length==0){
+            swal('请输入名称');
+            return false;
+        }
+        var data = new FormData(document.getElementById('form'));
+       $.ajax({
+           url:"/admin/house_config/save",
+           type:"post",
+           data:data,
+           dataType:"json",
+           contentType: false,
+           processData: false,
+           success:function(data){
+                if(data.status==1){
+                    swal({
+                        title: "保存成功",
+                        type: 'success',
+                        confirmButtonText: '确认'
+                    },function() {
+                        $('#houseConfig').click();
+                    });
+                }else{
+                    swal(data.msg, " ","error");
+                }
+           },
+
+       });
+    });
+
+    //选择图片
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+
+    $('#filename').change(function() {
+        var eImg = $('<img />');
+        eImg.attr('src', getObjectURL($(this)[0].files[0])); // 或 this.files[0] this->input
+        $(this).after(eImg);});
+
+</script>

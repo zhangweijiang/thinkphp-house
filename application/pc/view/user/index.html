@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>用户注册、登录</title>
+    <link rel="stylesheet" href="__PC__/css/login.css">
+    <script src="__PC__/js/jquery.min.js"></script>
+    <script src="__PC__/js/login.js"></script>
+    <style>
+        .content {
+            position: relative;
+            width: 100%;
+            height: 706px;
+            background: url("__PC__/images/bg.jpg") center center no-repeat;
+            background-color: #fbfbfb;
+            border-top: 2px solid #63ad02;
+        }
+        .login-content{
+            padding-left:25px;
+            padding-bottom:25px;
+            width:450px;
+            background:white;
+            margin:100px auto;
+        }
+        .submit-disable-btn{
+            pointer-events: none;
+            cursor: default;
+        }
+    </style>
+</head>
+<body>
+<!-- login-content -->
+<div class="content" >
+    <div class="login-content not-in-layer  ">
+        <div class="head">
+            <h3>登录链家网</h3>
+            <i class="iconfont" id="IframeLoginCloseBtn"></i>
+        </div>
+
+        <!-- form-content -->
+        <div class="form-content" >
+            <div class="tab-wrap">
+                <a class="cur" id="registerTab" href="javascript:void(0);">用户注册</a>
+
+                <i></i>
+
+                <a class="" id="loginTab" href="javascript:void(0);">账号密码登录</a>
+            </div>
+
+            <!-- form-wrap -->
+            <div class="form-wrap">
+
+                <!-- register form -->
+                <form class="form "  id="registerForm" action="{:url('pc/user/register')}" method="post">
+                    <div class="item itemNode">
+                        <p class="hidden error errorItem" >错误～</p>
+                        <div class="control-item-wrap">
+                            <div class="control-item controlItemNode">
+                                <i class="iconfont user-icon"></i>
+                                <i class="split">|</i>
+                                <input class="ipt" id="register_username"  name="username" type="text" maxlength="11" placeholder="请输入用户名" value="" >
+                            </div>
+                        </div>
+                        <i class="hidden iconfont icon-ok iconOK"></i>
+                    </div>
+                    <div class="item itemNode">
+                        <p class="hidden error errorItem" >错误～</p>
+                        <div class="control-item-wrap">
+                            <div class="control-item controlItemNode">
+                                <i class="iconfont lock-icon" ></i>
+                                <i class="split phone-split">|</i>
+                                <input class="ipt" id="register_password" name="password" type="password" maxlength="20" placeholder="请输入密码" value="" >
+                            </div>
+                        </div>
+                        <i class="hidden iconfont icon-ok iconOK"></i>
+                    </div>
+                    <div class="check-item">
+                        <label id="registerLabel">
+                            <span class="checkbox-fake checkbox-fake-checked">
+                                <i class="iconfont"></i>
+                            </span><span>我已阅读并接受</span>
+                        </label>
+                        <a href="{:url('pc/protocol/index')}" target="_blank">
+                            《用户服务协议》
+                        </a>
+                    </div>
+                    <input class="submit-btn"  type="submit" value="立即注册">
+                </form>
+                <!-- register form end -->
+
+
+                <!-- login form -->
+                <form class="form none" id="loginForm" action="{:url('pc/user/login')}" method="post">
+                    <div class="item itemNode">
+                        <p class="hidden error errorItem" >错误～</p>
+                        <div class="control-item-wrap auto-list-item-wrap">
+                            <div class="control-item controlItemNode">
+                                <i class="iconfont user-icon"></i>
+                                <i class="split user-split">|</i>
+                                <input class="ipt"  type="text" name="username" maxlength="30" placeholder="请输入用户名" value="" tabindex="1">
+                            </div>
+                        </div>
+                        <i class="hidden iconfont icon-ok iconOK"></i>
+                    </div>
+                    <div class="item itemNode">
+                        <p class="hidden error errorItem">错误～</p>
+                        <div class="control-item-wrap">
+                            <div class="sms-transition" id="pwdTransitionNode">
+                                <div class="control-item controlItemNode">
+                                    <i class="iconfont lock-icon" ></i>
+                                    <i class="split lock-split" >|</i>
+                                    <input class="ipt" id="pwdIpt" type="password" name="password" maxlength="20" placeholder="请输入密码" tabindex="2">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="check-item">
+                        <a class="right" href="javascript:" onclick="sendEmail()" >忘记密码？</a>
+                        <label id="loginLabel">
+                            <span class="checkbox-fake checkbox-fake-checked">
+                                <i class="iconfont"></i>
+                            </span>
+                            <span>我已阅读并接受</span>
+                        </label>
+                        <a href="{:url('pc/protocol/index')}" target="_blank">《用户服务协议》</a>
+                    </div>
+                    <input class="submit-btn"  type="submit" value="立即登录">
+                </form> <!-- login form end -->
+
+
+            </div> <!-- form-wrap end -->
+        </div> <!-- form-content end -->
+    </div>
+</div>
+ <!-- login-content end -->
+<script src="__PC__/plugins/layui/layui.all.js"></script>
+<!--sweetalert2-->
+<link rel="stylesheet" href="__ADMIN__/assets/css/sweetalert2.min.css">
+<script src="__ADMIN__/assets/js/sweetalert2.min.js"></script>
+<script>
+    //注册
+   $('#registerTab').click(function(){
+       $(this).addClass('cur');
+       $('#loginTab').removeClass('cur');
+      $('#registerForm').removeClass('none');
+      $('#loginForm').addClass('none');
+   });
+   //登录
+    $('#loginTab').click(function(){
+        $(this).addClass('cur');
+        $('#registerTab').removeClass('cur');
+        $('#loginForm').removeClass('none');
+        $('#registerForm').addClass('none');
+    });
+
+    //注册选中协议
+    $('#registerLabel,#loginLabel').click(function(){
+       if($(this).find('span:first').hasClass('checkbox-fake-checked')){
+           $(this).find('span:first').removeClass('checkbox-fake-checked');
+           $(this).parent().next('input').addClass('submit-disable-btn');
+       }else{
+           $(this).find('span:first').addClass('checkbox-fake-checked');
+           $(this).parent().next('input').removeClass('submit-disable-btn');
+       }
+    });
+
+    //注册、登录点击事件
+    $('#registerForm,#loginForm').submit(function(e){
+        var username = $(this).find("input[name='username']").val();
+        var password = $(this).find("input[name='password']").val();
+        var password_reg = /^([A-Z]|[a-z]|[0-9]|[`~!@#$%^&*()+=|{}':;',\\\\[\\\\].<>?~！@#￥%……&*（）——+|{}【】‘；：”“'。，、？]){6,20}/;
+        if(username.length<2||username.length>20){
+            layer.alert('用户名字符在2-20之间');
+            return false;
+        }
+        if(!password_reg.test(password)){
+            layer.alert('密码格式不正确');
+            return false;
+        }
+    });
+
+    //判断是注册还是登录
+    var type = "{$Think.GET.type}";
+    if(type=='1'){
+        $('#registerTab').trigger('click');
+    }else{
+        $('#loginTab').trigger('click');
+    }
+
+    //忘记密码
+    function sendEmail(){
+        swal({
+            title: '请输入电子邮箱',
+            input: 'email'
+        }).then(function(email) {
+            if (email) {
+                $.ajax({
+                    url:"{:url('user/forget')}",
+                    type:"post",
+                    dataType:"json",
+                    data:{email:email},
+                    success:function(data){
+                        if(data.status==1){
+                            swal({
+                                type: 'success',
+                                html: '成功发送邮箱: ' + email + '，请注意查收！'
+                            })
+                        }else if(data.status==0){
+                            swal({
+                                type: 'error',
+                                html: data.msg
+                            })
+                        }
+                    }
+                });
+            }
+        });
+    }
+</script>
+
+</body></html>

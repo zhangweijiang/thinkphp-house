@@ -1,0 +1,116 @@
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="custom-modal-text text-left" style="width:40%;">
+    <form role="form" id="form">
+        <input type="hidden" value="{$data.id|default=''}" name="id">
+        <div class="form-group">
+            <label for="username">中介名称</label>
+            <input type="text" class="form-control"  placeholder="请输入管理员名称" name="username"  value="{$data.username|default=''}">
+        </div>
+        {notempty name="data['id']"}
+        <div class="form-group">
+            <label for="username">中介密码</label>
+            <input type="password" class="form-control"  placeholder="请输入管理员密码" name="password">
+        </div>
+        {/notempty}
+        <div class="form-group">
+            <label for="truename">中介名称</label>
+            <input type="text" class="form-control"  placeholder="请输入真实姓名" name="truename"  value="{$data.truename|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="sex">性别</label>
+            <select name="sex" class="form-control">
+                <option value="0">请选择</option>
+                <option value="1" {notempty name="data['sex']"}{eq name="data['sex']" value="1"}selected{/eq}{/notempty} >男</option>
+                <option value="2" {notempty name="data['sex']"}{eq name="data['sex']" value="2"}selected{/eq}{/notempty} >女</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="user_img">头像</label>
+            <input type="file" class="form-control" id="user_img" name="user_img"  value="{$data.user_img|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="tel">手机号</label>
+            <input type="tel" class="form-control" placeholder="请输入名称"  name="tel" value="{$data.tel|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="email">email</label>
+            <input type="email" class="form-control" placeholder="请输入email" name="email" value="{$data.email|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="card">身份证</label>
+            <input type="email" class="form-control" placeholder="请输入身份证" name="card" value="{$data.card|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="company">所属公司</label>
+            <input type="text" class="form-control" placeholder="请输入所属公司" name="company" value="{$data.company|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="store">所属分店</label>
+            <input type="text" class="form-control" placeholder="请输入所属分店" name="store" value="{$data.store|default=''}">
+        </div>
+
+        <button type="submit" class="btn btn-default waves-effect waves-light" id="submit">保存</button>
+        <a  class="btn btn-danger waves-effect waves-light m-l-10"  href="/admin/agency/index" data-loader="true" data-title="管理员列表">返回</a>
+    </form>
+</div>
+<!--===================================================-->
+
+<script>
+    /*表单提交*/
+    $('#submit').click(function(e){
+        e.preventDefault();
+        var data = new FormData(document.getElementById('form'));
+       $.ajax({
+           url:"/admin/agency/save",
+           type:"post",
+           data:data,
+           dataType:"json",
+           contentType: false,
+           processData: false,
+           success:function(data){
+                if(data.status==1){
+                    swal({
+                        title: "保存成功",
+                        type: 'success',
+                        confirmButtonText: '确认'
+                    },function() {
+                        $('#agency').click();
+                    });
+                }else{
+                    swal(data.msg, " ","error");
+                }
+           },
+
+       });
+    });
+
+    function getObjectURL(file) {
+        var url = null ;
+        if (window.createObjectURL!=undefined) { // basic
+            url = window.createObjectURL(file) ;
+        } else if (window.URL!=undefined) { // mozilla(firefox)
+            url = window.URL.createObjectURL(file) ;
+        } else if (window.webkitURL!=undefined) { // webkit or chrome
+            url = window.webkitURL.createObjectURL(file) ;
+        }
+        return url ;
+    }
+
+    $('#user_img').change(function() {
+        var eImg = $('<img />');
+        eImg.attr('src', getObjectURL($(this)[0].files[0])); // 或 this.files[0] this->input
+        $(this).after(eImg);});
+
+
+</script>

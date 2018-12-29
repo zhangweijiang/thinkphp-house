@@ -1,0 +1,116 @@
+<!--
+* ......................我佛慈悲......................
+*                       _oo0oo_
+*                      o8888888o
+*                      88" . "88
+*                      (| -_- |)
+*                      0\  =  /0
+*                    ___/`---'\___
+*                  .' \\|     |// '.
+*                 / \\|||  :  |||// \
+*                / _||||| -卍-|||||- \
+*               |   | \\\  -  /// |   |
+*               | \_|  ''\---/''  |_/ |
+*               \  .-\__  '-'  ___/-. /
+*             ___'. .'  /--.--\  `. .'___
+*          ."" '<  `.___\_<|>_/___.' >' "".
+*         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+*         \  \ `_.   \_ __\ /__ _/   .-` /  /
+*     =====`-.____`.___ \_____/___.-`___.-'=====
+*                       `=---='
+*
+*..................佛祖开光 ,永无BUG...................
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{$title|default=''}</title>
+    <link rel="stylesheet" href="__PC__/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PC__/plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="__PC__/plugins/sumoselect/sumoselect.min.css">
+    <link rel="stylesheet" href="__PC__/css/plugins.reset.css">
+    <link rel="stylesheet" href="__PC__/css/common.css">
+    <link rel="stylesheet" href="__PC__/css/icon.css">
+    <link rel="stylesheet" href="__PC__/css/home.css">
+    {block name="style"}{/block}
+</head>
+<body class="loaded">
+<div class="wrapper">
+    <header class="top-wrapper">
+        <div class="container">
+            <div class="row">
+                <ul class="channelList">
+                    <li><a href="{:url('pc/index/index')}">首页</a></li>
+                    <li><a href="{:url('pc/second_hand_house_list/index')}">二手房</a></li>
+                    <li><a href="{:url('pc/new_house_list/index')}">新房</a></li>
+                    <li><a href="{:url('pc/rent_house_list/index')}">租房</a></li>
+                    <!--<li><a href="tool.html" target="_blank">工具</a></li>-->
+                    <li><a href="{:url('pc/lease/index')}" target="_blank">业主委托</a></li>
+                    <li><a class="" href="{:url('admin/login/index')}" target="_blank">中介登录</a></li>
+                </ul>
+                <div class="navbar-right">
+                    <div class="login" id="userInfoContainer">
+                        {notempty name="$Think.session.user"}
+                            <i class="fa fa-user-circle"></i>&nbsp;
+                            <a  href="{:url('pc/personal/index')}" rel="nofollow">{$Think.session.user.username}</a>&nbsp;&nbsp;
+                            <a  href="{:url('pc/user/logout')}">退出</a>
+                            {else/}
+                        <a  href="{:url('pc/user/index')}?type=2" rel="nofollow">登录&nbsp;</a>/<a  href="{:url('pc/user/index')}?type=1">&nbsp;注册</a>
+                        {/notempty}
+                    </div>
+                    <div class="phone">
+                        <i class="fa fa-phone-square"></i>&nbsp;
+                        <span>热线电话1010-9666</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    {block name="body">}{/block}
+    <footer class="footer-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="f-title">
+                    <div class="pull-left">
+                        <ul>
+                            <li><a href="#" rel="nofollow" target="_blank">了解链家</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">关于链家</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">联系我们</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">加入我们</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">隐私声明</a></li>
+                            <li><a href="#" target="_blank">网站地图</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">友情链接</a></li>
+                            <li><a href="{:url('admin/login/index')}" rel="nofollow" target="_blank">管理员登录</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">官方客服 1010 9666</div>
+                </div>
+                <div class="link-box clearfix">
+                    <div class="pull-left">
+                        <div class="tab"><span class="hover">房贷计算器</span></div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="copyright pull-left">链家网（北京）科技有限公司 | 网络经营许可证 京ICP备16057509号-2 | © Copyright©2010-2018
+                        链家网Lianjia.com版权所有
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<script src="__PC__/plugins/jquery/jquery.min.js"></script>
+<script src="__PC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PC__/plugins/layui/layui.all.js"></script>
+<script src="__PC__/plugins/validator/validator.min.js"></script>
+<script src="__PC__/plugins/sweetalert/sweetalert2.all.min.js"></script>
+<script src="__PC__/plugins/sumoselect/jquery.sumoselect.min.js"></script>
+<script src="__PC__/js/common.js"></script>
+<script src="__PC__/js/home.js"></script>
+{block name="script"}{/block}
+</body>
+</html>

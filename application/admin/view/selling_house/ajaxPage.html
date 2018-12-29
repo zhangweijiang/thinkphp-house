@@ -1,0 +1,86 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th>房屋类型</th>
+        <th>房屋标题</th>
+        <th data-switchable="false">小区名称</th>
+        <th>房屋图片</th>
+        <th>发布者姓名</th>
+        <th>看房时间</th>
+        <th>房屋户型</th>
+        <th>价格/每平米</th>
+        <th>建筑面积</th>
+        <th>总价格</th>
+        <th>套内面积</th>
+        <th>房屋朝向</th>
+        <th>装修情况</th>
+        <th>供暖方式</th>
+        <th>产权年限</th>
+        <th>所在楼层</th>
+        <th>户型结构</th>
+        <th>建筑类型</th>
+        <th>建筑结构</th>
+        <th>梯户比例</th>
+        <th>配备电梯</th>
+        <th>添加时间</th>
+        <th style="width:100px;">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>
+            {if condition="$vo.type eq 1"}
+            二手房
+            {else/}
+            新房
+            {/if}
+        </td>
+        <td><span title="{$vo.title}">{$vo.title| subtext=5}</span></td>
+        <td>{$vo.name}</td>
+        {empty name="$vo.house_img[0]['filename']"}
+        <td><img src="" alt=""></td>
+        {else/}
+        <td><img class="houseImg"  style="width:50px;height:50px" src="/upload/{$vo.house_img[0]['filename']}" alt="" data-id="{$vo.id}" data-toggle="modal" data-target="#houseImgModal"></td>
+        {/empty}
+        <td>{$vo.username}</td>
+        <td>{$vo.see_house_time}</td>
+        <td>{$vo.shi}室{$vo.ting}厅{$vo.chu}厨{$vo.wei}卫</td>
+        <td>{$vo.money}</td>
+        <td>{$vo.building_acreage}m²</td>
+        <td>{$vo.total_money}</td>
+        <td>{$vo.inner_acreage}m²</td>
+        <td>{$vo.direction}</td>
+        <td>{$vo.decoration}</td>
+        <td>{$vo.heating_method}</td>
+        <td>{$vo.years}</td>
+        <td>{$vo.floor}({$vo.floor_count})</td>
+        <td>{$vo.family_structure}</td>
+        <td>{$vo.building_type}</td>
+        <td>{$vo.building_structure}</td>
+        <td>{$vo.ti}梯{$vo.hu}户</td>
+        <td>{$vo.lift}</td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td style="width:100px;">
+            <div class="btn-group">
+                <a class="btn btn-primary " href="javascript:void(0);">操作</a>
+                <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="javascript:void(0);"><i class="fa fa-angle-down"></i></a>
+                <ul class="dropdown-menu dropdown-info">
+                    <li>
+                        <a href="javascript:void(0);" class="delete" data-id="{$vo['id']}">刪除</a>
+                    </li>
+                    <li>
+                        <a  href="/admin/selling_house/set?id={$vo.id}" data-loader="true" data-title="二手房设置">编辑</a>
+                    </li>
+                </ul>
+            </div>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

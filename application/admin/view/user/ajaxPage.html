@@ -1,0 +1,58 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th data-switchable="false">用户名称</th>
+        <th>手机号</th>
+        <th>性别</th>
+        <th>头像</th>
+        <th>email</th>
+        <th>身份证</th>
+        <th>状态</th>
+        <th>添加时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>{$vo.username}</td>
+        <td>{$vo.tel}</td>
+        <td>
+            {if condition="$vo.sex eq 1"}
+            男
+            {elseif condition="$vo.sex eq 2"/}
+            女
+            {/if}
+        </td>
+        {empty name="$vo.user_img"}
+        <td><img src="" alt=""></td>
+        {else/}
+        <td><img src="/upload/{$vo.user_img}" alt="" style="width:50px;height:50px;"></td>
+        {/empty}
+        <td>{$vo.email}</td>
+        <td>{$vo.card}</td>
+        <td>
+            {if condition="$vo.status eq 1"}
+            启用
+            {elseif condition="$vo.status eq 2"/}
+            禁用
+            {/if}
+        </td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td>
+            <button type="button" class="btn btn-danger waves-effect waves-light delete" data-id="{$vo.id}" style="padding-top:2px !important;padding-bottom:2px !important;">删除</button>
+            {if condition="$vo.status eq 1"}
+            <button type="button" class="btn btn-danger waves-effect waves-light user_status" data-id="{$vo.id}" data-status="2" style="padding-top:2px !important;padding-bottom:2px !important;">禁用</button>
+            {elseif condition="$vo.status eq 2"}
+            <button type="button" class="btn btn-info waves-effect waves-light user_status" data-id="{$vo.id}" data-status="1" style="padding-top:2px !important;padding-bottom:2px !important;">启用</button>
+            {/if}
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

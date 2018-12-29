@@ -1,0 +1,49 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th data-switchable="false">小区名称</th>
+        <th>委托者姓名</th>
+        <th>委托者电话</th>
+        <th>期望价格</th>
+        <th>面积</th>
+        <th>房屋地址</th>
+        <th>户型</th>
+        <th>接单人姓名</th>
+        <th>接单状态</th>
+        <th>添加时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>{$vo.title}</td>
+        <td>{$vo.username}</td>
+        <td>{$vo.tel}</td>
+        <td>{$vo.money}</td>
+        <td>{$vo.acreage}m²</td>
+        <td>{$vo.building}栋{notempty name="vo['unit']"}{$vo.unit}单元{/notempty}{$vo.doorplate}</td>
+        <td>{$vo.house_type}</td>
+        <td>{$vo.take_name}</td>
+        <td>
+            {if condition="$vo.is_take eq 1"}
+            未接单
+            {elseif condition="$vo.is_take eq 2"/}
+            已接单
+            {/if}
+        </td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td>
+            {if condition="$vo.is_take eq 1"}
+            <button type="button" class="btn btn-danger waves-effect waves-light take" data-id="{$vo.id}" style="padding-top:2px !important;padding-bottom:2px !important;">接单</button>
+            {/if}
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

@@ -1,0 +1,285 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .overview .content .brokerInfo .brokerInfoText .phone{
+        height:33px;
+        line-height:33px;
+        font-size:20px;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="menu">
+                <div class="menuLeft">
+                    <a href="#" class="logo"></a>
+                    <!--<ul class="typeList">
+                        <li class="selected"><a href="#" title="厦门在售二手房">在售</a></li>
+                        <li><a href="#" title="厦门成交二手房">成交</a></li>
+                        <li><a href="#" title="厦门小区二手房">小区</a></li>
+                        <li><a href="#" title="厦门房价二手房">房价</a></li>
+                        <li><a href="#" title="厦门地图找房二手房" target="_blank">地图找房</a></li>
+                    </ul>-->
+                </div>
+            </div>
+            <div class="search">
+                <div class="input">
+                    <form id="searchForm" action="javascript:">
+                        <input type="text" id="searchInput" placeholder="试试输入组合条件找房，如中冶蓝城" value="{$Think.GET.search}">
+                        <div class="inputRightPart">
+                            <div class="save" id="savedSearchMsg">
+                                <span id="savedSearchCount">0</span>条已保存搜索
+                                <span id="savedSearchArrow" class="downArrow"></span>
+                            </div>
+                            <button type="submit" class="searchButton" id="btn-search">&nbsp;<i></i>&nbsp;</button>
+                        </div>
+                    </form>
+                    <div class="searchMsg" id="searchMsgContainer" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="intro container">
+        <div class="row">
+            <a href="index.html">链家网</a>
+            <span class="stp">&nbsp;&gt;&nbsp;</span>
+            <span>当前房源</span>&nbsp;
+        </div>
+    </div>
+    <div class="content-wrapper container">
+        <div class="row">
+            <div class="title-wrapper leaseDetail">
+                <div class="content">
+                    <div class="title">
+                        <h1 class="main">{$data.title}</h1>
+                        <div class="sub">{$data.desc}</div>
+                    </div>
+                    <div class="btnContainer ">
+                        {if condition="$attention_ok eq 1"}
+                        <button id="follow" data-status="1">已关注</button>
+                        {else/}
+                        <button id="follow" data-status="0">关注房源</button>
+                        {/if}
+                    </div>
+                </div>
+            </div>
+            <div class="overview clearfix">
+                <div class="img" id="topImg">
+                    <div class="imgContainer">
+                        <img class="new-default-icon defaultImg" src="__UPLOAD__/{$data['img'][0]['filename']}" alt="厅A" style="display: block;">
+                    </div>
+                    <div class="thumbnail-img" id="thumbnail2">
+                        <div class="pre">&lt;</div>
+                        <ul class="smallpic">
+                            {volist name="data['img']" id="vo"}
+                            {if condition="$key eq 0"}
+                                <li class="selected">
+                                    <img src="__UPLOAD__/{$vo.filename}" alt="{$data.title}">
+                                </li>
+                            {else/}
+                                <li >
+                                    <img src="__UPLOAD__/{$vo.filename}" alt="{$data.title}">
+                                </li>
+                            {/if}
+                            {/volist}
+                        </ul>
+                        <div class="next">&gt;</div>
+                    </div>
+                </div>
+                <div class="content zf-content">
+                    <div class="price">
+                        <span class="total">{$data.money}</span>
+                        <span class="unit">
+                            <span>元/月</span>
+                        </span>
+                    </div>
+                    <div class="zf-room">
+                        <p class="lf">
+                            <i>面积：</i>{$data.acreage}平米
+                        </p>
+                        <p class="lf">
+                            <i>房屋户型：</i>{$data.type1}室{$data.type2}厅{$data.type3}卫
+                        </p>
+                        <p class="lf">
+                            <i>楼层：</i>{$data.floor} (共{$data.floor_count}层)
+                        </p>
+                        <p class="lf">
+                            <i>房屋朝向：</i>{$data.direction}
+                        </p>
+                        <div class="clearfix"></div>
+                        <p>
+                            <i>小区：</i>
+                            <a href="#">{$data.name}</a>
+                        </p>
+                        <p class="lf">
+                            <i>时间：</i>{$data.day}
+                        </p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="brokerInfo clearfix">
+                        <a href="#">
+                            <img src="__UPLOAD__/{$data['info']['user_img']}" alt="">
+                        </a>
+                        <div class="brokerInfoText">
+                            {if condition="$data['info']['type'] eq 2"}
+                            <div class="brokerName">
+                                <a href="#" class="name">{$data['info']['truename']}</a>
+                                <span class="tag ">平台人员</span>
+                            </div>
+                            {else/}
+                            <div class="brokerName">
+                                <a href="#" class="name">{$data['info']['username']}</a>
+                                <span class="tag ">助理中介</span>
+                            </div>
+                            {/if}
+                            <div class="phone">
+                                联系电话:{$data['info']['tel']}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="houseRecord">
+                        <span class="houseNum">链家编号：{$data['house_sn']}</span>
+                        <div class="pull-right">
+                            <a href="javascript:;" class="report">虚假房源举报</a>
+                            <a href="#" target="blank" class="detail">假一罚百细则</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="content-wrapper introduction-wrapper container" id="introduction">
+        <div class="row">
+            <div class="introduction">
+                <div class="title">房源介绍</div>
+                <div class="introContent">
+                    <div class="base">
+                        <div class="name">基本属性</div>
+                        <div class="content">
+                            <ul>
+                                <li><span class="label">租赁方式：</span>{$data.way}</li>
+                                <li>
+                                    <span class="label">装修情况：</span>
+                                    {$data.decoration}
+                                </li>
+                                <li><span class="label">供暖方式：</span>{$data.heating_method}</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="feature">
+                        <div class="name">房源特色</div>
+                        <div class="zf-tag">
+                            <ul class="se">
+                                {volist name="$data['configs']" id="vo"}
+                                    <li class="tag11 ">
+                                        <img src="__UPLOAD__/{$vo.filename}" alt="{$vo.name}"style="width:50px;height:auto;">
+                                    </li>
+                                {/volist}
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="featureContent">
+                            <div class="noData">暂无房源介绍</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="push container">
+        <div class="row">
+            <div class="content">
+                <div class="title">好房为你推荐 </div>
+                <ul>
+                    {volist name="houseList" id="vo"}
+                    <li>
+                        <div class="pic">
+                            <a href="#">
+                                <img src="__UPLOAD__/{$vo.img}" alt="">
+                            </a>
+                            <span>{$vo.money}元</span>
+                        </div>
+                        <div class="title">
+                            <span class="name">
+                                <a href="#">{$vo.name}</a>
+                            </span>
+                            <span class="info">{$vo.type1}室{$vo.type2}厅/{$vo.acreage}平米</span>
+                        </div>
+                    </li>
+                    {/volist}
+
+                </ul>
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="script"}
+<script>
+    $('#btn-search').click(function(){
+        var search = $('#searchInput').val();
+        window.location.href = "/pc/rent_house_list/index?search="+search;
+    });
+
+    //鼠标移到已关注事件
+    $('#follow').on('mouseover',function(){
+        if($(this).data('status')==1){
+            $(this).html('取消关注');
+        }
+    });
+    $('#follow').on('mouseout',function(){
+        if($(this).data('status')==1){
+            $(this).html('已关注');
+        }
+    });
+
+    $('#follow').click(function(){
+        var status = $(this).data('status');
+        if(status==1){
+            var id = "{$Think.GET.id}";
+            $.ajax({
+                url:"{:url('pc/rent_house/cancel_attention')}",
+                type:"post",
+                data:{id:id},
+                dataType:"json",
+                success:function(data){
+                    if(data.status==1){
+                        layer.msg('已取消关注', {icon: 1,time:2000},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg('已取消关注失败', {icon: 1,time:2000},function(){
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        }else{
+            var id = "{$Think.GET.id}";
+            $.ajax({
+                url:"{:url('pc/rent_house/attention')}",
+                type:"post",
+                data:{id:id},
+                dataType:"json",
+                success:function(data){
+                    if(data.status==2){
+                        layer.msg(data.msg, {icon: 2,time:2000},function(){
+                            window.location.href = "/pc/user/index?type=2";
+                        });
+                    }else if(data.status==1){
+                        layer.msg(data.msg, {icon: 1,time:2000},function(){
+                            window.location.reload();
+                        });
+                    }else{
+                        layer.msg(data.msg, {icon: 2,time:2000},function(){
+                            window.location.reload();
+                        });
+                    }
+                }
+            });
+        }
+    });
+</script>
+{/block}

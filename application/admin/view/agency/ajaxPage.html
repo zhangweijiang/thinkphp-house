@@ -1,0 +1,68 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th data-switchable="false">用户账号</th>
+        <th>真实姓名</th>
+        <th>联系电话</th>
+        <th>性别</th>
+        <th>头像</th>
+        <th>email</th>
+        <th>身份证</th>
+        <th>状态</th>
+        <th>所属公司</th>
+        <th>所属分店</th>
+        <th>添加时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>{$vo.username}</td>
+        <td>{$vo.truename}</td>
+        <td>{$vo.tel}</td>
+        <td>
+            {if condition="$vo.sex eq 1"}
+            男
+            {elseif condition="$vo.sex eq 2"/}
+            女
+            {/if}
+        </td>
+        {empty name="$vo['user_img']"}
+        <td><img src="" alt=""></td>
+        {else/}
+        <td><img src="/upload/{$vo.user_img}" alt="" style="width:50px;height:50px;"></td>
+        {/empty}
+        <td>{$vo.email}</td>
+        <td>{$vo.card}</td>
+        <td>
+            {if condition="$vo.status eq 1"}
+            启用
+            {elseif condition="$vo.status eq 2"/}
+            禁用
+            {/if}
+        </td>
+        <td>{$vo.company}</td>
+        <td>{$vo.store}</td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td>
+            <button type="button" class="btn btn-danger waves-effect waves-light delete" data-id="{$vo.id}" style="padding-top:2px !important;padding-bottom:2px !important;">删除</button>
+            {if condition="$Think.SESSION.think.admin.type eq 1"}
+                <a  href="/admin/agency/set?id={$vo.id}" class="btn btn-danger" style="padding-top:2px;padding-bottom:2px;" data-loader="true" data-title="中介用户设置">编辑</a>
+                {else/}
+                {if condition="$vo.status eq 1"}
+                <button type="button" class="btn btn-danger waves-effect waves-light agency_status" data-id="{$vo.id}" data-status="2" style="padding-top:2px !important;padding-bottom:2px !important;">禁用</button>
+                {elseif condition="$vo.status eq 2"}
+                <button type="button" class="btn btn-info waves-effect waves-light agency_status" data-id="{$vo.id}" data-status="1" style="padding-top:2px !important;padding-bottom:2px !important;">启用</button>
+                {/if}
+            {/if}
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

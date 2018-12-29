@@ -1,0 +1,149 @@
+﻿<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+
+            <form action="" id="app-form">
+                <div class="col-sm-4">
+                    <div class="dataTables_length">
+                        <label for="username" style="width:90px;float:left;height:28px;line-height:30px;">用户名称</label>
+                        <input type="text" name="username" class="form-control input-sm" style="width:40%;float:left;" value="{$username|default=''}">
+                        <a  id="app-search" class="btn btn-default waves-effect waves-light " style="margin-left:13px;" href="/admin/user/index" data-loader="true" data-title="普通用户列表">搜索 </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+    <div class="col-sm-12">
+        <div class="card-box" id="userTableWrapper">
+            <table id="demo-foo-filtering" data-toggle="table"
+                   data-page-size="10"
+                   data-pagination="true" class="table-bordered ">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-switchable="false">用户名称</th>
+                    <th>手机号</th>
+                    <th>性别</th>
+                    <th>头像</th>
+                    <th>email</th>
+                    <th>身份证</th>
+                    <th>状态</th>
+                    <th>添加时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {volist name="list" id="vo"}
+                    <tr>
+                        <td></td>
+                        <td>{$vo.username}</td>
+                        <td>{$vo.tel}</td>
+                        <td>
+                            {if condition="$vo.sex eq 1"}
+                                男
+                            {elseif condition="$vo.sex eq 2"/}
+                                女
+                            {/if}
+                        </td>
+                        {empty name="$vo.user_img"}
+                        <td><img src="" alt=""></td>
+                        {else/}
+                        <td><img src="/upload/{$vo.user_img}" alt="" style="width:50px;height:50px;"></td>
+                        {/empty}
+                        <td>{$vo.email}</td>
+                        <td>{$vo.card}</td>
+                        <td>
+                            {if condition="$vo.status eq 1"}
+                            启用
+                                {elseif condition="$vo.status eq 2"/}
+                            禁用
+                            {/if}
+                        </td>
+                        <td>{$vo.add_time|date='Y-m-d',###}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger waves-effect waves-light delete" data-id="{$vo.id}" style="padding-top:2px !important;padding-bottom:2px !important;">删除</button>
+                            {if condition="$vo.status eq 1"}
+                            <button type="button" class="btn btn-danger waves-effect waves-light user_status" data-id="{$vo.id}" data-status="2" style="padding-top:2px !important;padding-bottom:2px !important;">禁用</button>
+                            {elseif condition="$vo.status eq 2"}
+                            <button type="button" class="btn btn-info waves-effect waves-light user_status" data-id="{$vo.id}" data-status="1" style="padding-top:2px !important;padding-bottom:2px !important;">启用</button>
+                            {/if}
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<!--===================================================-->
+
+<script>
+   /* 删除点击事件*/
+   $( '#userTableWrapper').on('click','.delete',function(){
+       var id = $(this).data('id');
+       swal({
+           title: "确定删除吗?",
+           type: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#DD6B55",
+           confirmButtonText: "确定",
+           cancelButtonText: '取消',
+           closeOnConfirm: false
+       }, function(){
+           $.ajax({
+               url : "{:url('user/delete')}",
+               type: "post",
+               data:{id:id},
+               dataType:"json",
+               success:function(data){
+                   if(data.status==1){
+                       swal({
+                           title: "您已成功删除这条信息",
+                           type: 'success',
+                           confirmButtonText: '确认'
+                       },function() {
+                           var form = $('#app-form').serialize();
+                           ajaxReturnPage("/admin/user/refresh?"+form, 'post', { id: id, status: status}, '#userTableWrapper');
+                       });
+                   }else{
+                       swal(data.msg, "", "error");
+                   }
+               }
+           });
+       });
+
+   });
+
+   //搜索
+   $('#app-search').click(function(){
+       var form = $('#app-form').serialize();
+       var href = "/admin/user/index?" + form;
+       $(this).attr('href',href);
+   });
+
+   //启用和禁用点击事件
+   $( '#userTableWrapper').on('click','.user_status',function(e){
+       e.preventDefault();
+       var id = $(this).data('id');
+       var status = $(this).data('status');
+       var form = $('#app-form').serialize();
+       ajaxReturnPage("/admin/user/updateStatus?"+form, 'post', { id: id, status: status}, '#userTableWrapper');
+   })
+
+
+
+</script>
+
+
+
+
+

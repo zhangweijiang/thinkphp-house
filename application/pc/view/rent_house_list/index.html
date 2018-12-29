@@ -1,0 +1,167 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    .typeList .first .SumoSelect{
+        width:130px;
+    }
+</style>
+{/block}
+{block name="body"}
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="menu">
+                <div class="menuLeft">
+                    <a href="#" class="logo"></a>
+                    <ul class="typeList">
+                        <li class="first">
+                            <div class="search-pane" >
+                                <select id="money" name="money">
+                                    <option value="">按租金</option>
+                                    <option value="1" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="1"}selected{/eq}{/notempty} >1500元以下</option>
+                                    <option value="2" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="2"}selected{/eq}{/notempty} >1500-2000元</option>
+                                    <option value="3" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="3"}selected{/eq}{/notempty} >2000-2500元</option>
+                                    <option value="4" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="4"}selected{/eq}{/notempty} >2500-3000元</option>
+                                    <option value="5" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="5"}selected{/eq}{/notempty} >3000-3500元</option>
+                                    <option value="6" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="6"}selected{/eq}{/notempty} >3500-4000元</option>
+                                    <option value="7" {notempty name="Think.GET.money"}{eq name="Think.GET.money" value="7"}selected{/eq}{/notempty} >4000元以上</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="second">
+                            <div class="search-pane" >
+                                <select id="decoration" name="decoration">
+                                    <option value="">按装修</option>
+                                    <option value="1" {notempty name="Think.GET.decoration"}{eq name="Think.GET.decoration" value="1"}selected{/eq}{/notempty} >精装修</option>
+                                    <option value="2" {notempty name="Think.GET.decoration"}{eq name="Think.GET.decoration" value="2"}selected{/eq}{/notempty} >普通装修</option>
+                                    <option value="3" {notempty name="Think.GET.decoration"}{eq name="Think.GET.decoration" value="3"}selected{/eq}{/notempty} >毛坯房</option>
+                                </select>
+                            </div>
+                        </li>
+                        <li class="third">
+                            <div class="search-pane" >
+                                <select id="acreage" name="building_acreage">
+                                    <option value="">按面积(平)</option>
+                                    <option value="1" {notempty name="Think.GET.acreage"}{eq name="Think.GET.acreage" value="1"}selected{/eq}{/notempty} >20以下</option>
+                                    <option value="2" {notempty name="Think.GET.acreage"}{eq name="Think.GET.acreage" value="2"}selected{/eq}{/notempty} >20-40</option>
+                                    <option value="3" {notempty name="Think.GET.acreage"}{eq name="Think.GET.acreage" value="3"}selected{/eq}{/notempty}>40-60</option>
+                                    <option value="4" {notempty name="Think.GET.acreage"}{eq name="Think.GET.acreage" value="4"}selected{/eq}{/notempty}>60-100</option>
+                                    <option value="5" {notempty name="Think.GET.acreage"}{eq name="Think.GET.acreage" value="5"}selected{/eq}{/notempty} >100以上</option>
+                                </select>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="search">
+                <div class="input">
+                    <form id="searchForm" action="javascript:">
+                        <input type="text" id="searchInput" placeholder="试试输入组合条件找房，如中冶蓝城" value="{$Think.GET.search}">
+                        <div class="inputRightPart">
+                            <div class="save" id="savedSearchMsg">
+                                <span id="savedSearchCount">0</span>条已保存搜索
+                                <span id="savedSearchArrow" class="downArrow"></span>
+                            </div>
+                            <button type="submit" class="searchButton" id="btn-search">&nbsp;<i></i>&nbsp;</button>
+                        </div>
+                    </form>
+                    <div class="searchMsg" id="searchMsgContainer" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="list-content container">
+        <div class="row">
+            <div class="resultDes clearfix">
+                <h2 class="total pull-left">
+                    共找到<span> {$count} </span>套出租房</h2>
+                <div class="button pull-right"></div>
+            </div>
+            <ul class="sellListContent">
+                {volist name="HouseList" id="vo"}
+                    <li class="clearfix">
+                    <a class="img " href="{:url('pc/rent_house/index')}?id={$vo.id}" target="_blank">
+                        <img class="lj-lazy" src="__UPLOAD__/{$vo.img}" alt="{$vo.title}" style="display: block;">
+                    </a>
+                    <div class="info clearfix">
+                        <div class="title">
+                            <a class="" href="{:url('pc/rent_house/index')}?id={$vo.id}" target="_blank">{$vo.title}</a>
+                        </div>
+                        <div class="address">
+                            <div class="houseInfo">
+                                <span class="houseIcon"></span>
+                                <a href="{:url('pc/rent_house/index')}?id={$vo.id}" target="_blank">{$vo.name} </a>
+                                | {$vo.type1}室{$vo.type2}厅 |{$vo.acreage}平米 | {$vo.direction} | {$vo.decoration}
+                            </div>
+                        </div>
+                        <div class="flood">
+                            <div class="positionInfo">
+                                <span class="positionIcon"></span>{$vo.floor}(共{$vo.floor_count}层)
+                            </div>
+                        </div>
+                        <div class="followInfo">
+                            <span class="starIcon"></span>{$vo.attention}人关注 /  {$vo.day}
+                        </div>
+
+                        <div class="priceInfo">
+                            <div class="totalPrice">
+                                <span>{$vo.money}元/月</span>
+                            </div>
+                            <div class="unitPrice">
+                                <span>{$vo.add_time|date='Y-m-d',###}</span>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+            {$HouseList->render()}
+        </div>
+    </div>
+    <div id="newHousePush" class="newHousePush">
+        <div class="container">
+            <div class="row">
+                <h3>推荐房屋</h3>
+                <ul>
+                    {volist name="list" id="vo"}
+                        <li>
+                            <a class="pic" href="{:url('pc/rent_house/index')}?id={$vo.id}" target="_blank">
+                                <span class="bg"></span>
+                                <img src="__UPLOAD__/{$vo.img}">
+                                <div class="description">{$vo.name|subtext=10}</div>
+                            </a>
+                            <p class="area">{$vo.type1}室{$vo.type2}厅&nbsp;-&nbsp;{$vo.acreage}平米</p>
+                            <div class="price">
+                                <i>{$vo.money}</i>元/月
+                            </div>
+                        </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="script"}
+<script>
+    $('#btn-search').click(function(){
+        var search = $('#searchInput').val();
+        var money = $('#money').val();
+        var acreage = $('#acreage').val();
+        var decoration = $('#decoration').val();
+        if(money!=''){
+            search =  search + "&money=" + money;
+        }
+        if(acreage!=''){
+            search = search + "&acreage=" + acreage;
+        }
+        if(decoration!=''){
+            search = search + "&decoration=" + decoration;
+        }
+        window.location.href = "/pc/rent_house_list/index?search="+search;
+    });
+    $('#money').SumoSelect();
+    $('#decoration').SumoSelect();
+    $('#acreage').SumoSelect();
+</script>
+{/block}

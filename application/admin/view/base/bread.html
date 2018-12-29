@@ -1,0 +1,17 @@
+<div class="row">
+	<div class="col-sm-12">
+		<ol class="breadcrumb">
+			{volist name="bread" id="b"}
+			{if condition="$b.url eq ''"}
+				<li>
+					<span>{$b.name}</span>
+				</li>
+			{else/}
+				<li>
+					<a href="{$b.url}" data-loader="true" data-title="{$b.name}">{$b.name}</a>
+				</li>
+			{/if}
+			{/volist}
+		</ol>
+	</div>
+</div>

@@ -1,0 +1,136 @@
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-9">
+                <div class="m-b-0">
+                    <a  class="btn btn-default btn-md waves-effect waves-light m-b-0"  href="/admin/admin_oath/set" data-loader="true" data-title="权限设置">添加 <i class="fa fa-plus"></i> </a>
+                </div>
+            </div>
+
+            <form action="" id="app-form">
+                <div class="col-sm-3">
+                    <div class="dataTables_length">
+                        <label for="type" style="width:40px;float:left;height:20px;line-height:28px;">类型</label>
+                        <select name="type" id="type" class="form-control input-sm" style="width:40%;float:left;">
+                            {empty name="$type"}
+                                <option value="0">请选择</option>
+                                <option value="1">中介</option>
+                                <option value="2">管理员</option>
+                            {else/}
+                                <option value="0" {if condition="$type eq 0"}selected{/if}>请选择</option>
+                                <option value="1" {if condition="$type eq 1"}selected{/if}>中介</option>
+                                <option value="2" {if condition="$type eq 2"}selected{/if}>管理员</option>
+                            {/empty}
+
+                        </select>
+                        <a  id="app-search" class="btn btn-default waves-effect waves-light " style="margin-left:13px;" href="/admin/admin_oath/index" data-loader="true" data-title="权限管理">搜索 </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="row">
+    <div class="col-sm-12">
+        <div class="card-box" id="adminOathTableWrapper">
+            <table id="demo-foo-filtering" data-toggle="table"
+                   data-page-size="10"
+                   data-pagination="true" class="table-bordered ">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-switchable="false">类型</th>
+                    <th>控制器</th>
+                    <th>名称</th>
+                    <th>描述</th>
+                    <th>添加时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {volist name="list" id="vo"}
+                    <tr>
+                        <td></td>
+                        <td>
+                            {if condition="$vo.type eq 1"}
+                                中介
+                            {elseif condition="$vo.type eq 2"/}
+                            管理员
+                            {/if}
+                        </td>
+                        <td>{$vo.controller}</td>
+                        <td>{$vo.name}</td>
+                        <td>{$vo.summary}</td>
+                        <td>{$vo.add_time|date='Y-m-d',###}</td>
+                        <td>
+                            <button type="button" class="btn btn-danger waves-effect waves-light delete" data-id="{$vo.id}" style="padding-top:2px !important;padding-bottom:2px !important;">删除</button>
+                            <a  class="btn btn-info waves-effect waves-light m-l-10"  href="/admin/admin_oath/set?id={$vo.id}" data-loader="true" data-title="权限设置" style="padding-top:2px !important;padding-bottom:2px !important;">编辑</a>
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<!--===================================================-->
+
+
+<script>
+   /* 删除点击事件*/
+   $('#adminOathTableWrapper').on('click','.delete',function(){
+       var id = $(this).data('id');
+       swal({
+           title: "确定删除吗?",
+           type: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#DD6B55",
+           confirmButtonText: "确定",
+           cancelButtonText: '取消',
+           closeOnConfirm: false
+       }, function(){
+           $.ajax({
+               url : "{:url('admin_oath/delete')}",
+               type: "post",
+               data:{id:id},
+               dataType:"json",
+               success:function(data){
+                   if(data.status==1){
+                       swal({
+                           title: "您已成功删除这条信息",
+                           type: 'success',
+                           confirmButtonText: '确认'
+                       },function() {
+                           var form = $('#app-form').serialize();
+                           ajaxReturnPage("/admin/admin_oath/refresh?"+form, 'post', {}, '#adminOathTableWrapper');
+                       });
+                   }else{
+                       swal(data.msg, "", "error")
+                   }
+               }
+           });
+       });
+
+   });
+
+   //搜索
+   $('#app-search').click(function(){
+       var form = $('#app-form').serialize();
+       var href = "/admin/admin_oath/index?" + form;
+       $(this).attr('href',href);
+   })
+
+
+</script>
+
+
+
+
+

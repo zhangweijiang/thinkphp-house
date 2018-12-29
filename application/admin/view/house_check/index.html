@@ -1,0 +1,292 @@
+
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-4">
+                <form action="" id="app-form">
+                        <div class="dataTables_length">
+                            <label for="title" style="width:90px;float:left;height:28px;line-height:30px;">房屋标题</label>
+                            <input type="text" name="title" class="form-control input-sm" style="width:40%;float:left;" value="{$title|default=''}">
+                            <a  id="app-search" class="btn btn-default waves-effect waves-light " style="margin-left:13px;" href="/admin/house_check/index" data-loader="true" data-title="房屋审核列表">搜索 </a>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+    <div class="col-sm-12">
+        <div class="card-box" id="houseCheckTableWrapper">
+            <table id="demo-foo-filtering" data-toggle="table"
+                   data-page-size="10"
+                   data-pagination="true" class="table-bordered ">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-switchable="false">房屋标题</th>
+                    <th data-switchable="false">小区名称</th>
+                    <th>房屋图片</th>
+                    <th>发布者姓名</th>
+                    <th>户型</th>
+                    <th>楼层</th>
+                    <th>面积</th>
+                    <th>朝向</th>
+                    <th>装修</th>
+                    <th>方式</th>
+                    <th>房屋配置</th>
+                    <th>地址</th>
+                    <th>房屋描述</th>
+                    <th>审核状态</th>
+                    <th>添加时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {volist name="list" id="vo"}
+                    <tr>
+                        <td></td>
+                        <td><span title="{$vo.title}">{$vo.title| subtext=5}</span></td>
+                        <td>{$vo.name}</td>
+                        {empty name="$vo.house_img[0]['filename']"}
+                        <td><img src="" alt=""></td>
+                        {else/}
+                        <td><img class="houseImg" data-id='{$vo.id}' style="width:50px;height:50px" src="/upload/{$vo.house_img[0]['filename']}" alt="" data-toggle="modal" data-target="#houseImgModal"></td>
+                        {/empty}
+                        <td>{$vo.username}</td>
+                        <td>{$vo.type1}室{$vo.type2}厅{$vo.type3}卫</td>
+                        <td>{$vo.floor}(共{$vo.floor_count}层)</td>
+                        <td>{$vo.acreage}m² </td>
+                        <td>{$vo.direction}</td>
+                        <td>
+                            {if condition="$vo.decoration eq 1"}
+                            精装修
+                                {elseif condition="$vo.decoration eq 2"/}
+                            普通装修
+                            {elseif condition="$vo.decoration eq 3"/}
+                            毛坯房
+                            {/if}
+                        </td>
+                        <td>
+                            {if condition="$vo.way eq 1"}
+                                整租
+                            {elseif condition="$vo.way eq 2"/}
+                                合租
+                            {/if}
+                        </td>
+                        <td><a href="javascript:void(0)" title="{$vo.config}" class="houseConfig" data-toggle="modal" data-target="#houseConfigModal">{$vo.config | subtext=5 }</a></td>
+                        <td><a href="javascript:void(0)" title="{$vo.address}" class="houseAddress" data-toggle="modal" data-target="#houseAddressModal">{$vo.address | subtext=5 }</a></td>
+                        <td><a href="javascript:void(0)" title="{$vo.desc}" class="houseDesc" data-toggle="modal" data-target="#houseDescModal">{$vo.desc | subtext=5}</a></td>
+                        <td>
+                            {if condition="$vo.status eq 0"}
+                                待审核
+                            {elseif condition="$vo.status eq 1"}
+                                已通过
+                            {elseif condition="$vo.status eq 2"}
+                                未通过
+                            {/if}
+                        </td>
+                        <td>{$vo.add_time|date='Y-m-d',###}</td>
+                        <td>
+                            {if condition="$vo.status eq 0"}
+                            <button type="button" class="btn btn-danger waves-effect waves-light status" data-id="{$vo.id}" data-status="1" style="padding-top:2px !important;padding-bottom:2px !important;">通过</button>
+                            <button type="button" class="btn btn-danger waves-effect waves-light status" data-id="{$vo.id}" data-status="2" style="padding-top:2px !important;padding-bottom:2px !important;">不通过</button>
+                            {/if}
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<!--===================================================-->
+
+<!-- 按钮触发模态框 -->
+
+<!-- 模态框（Modal） -->
+<!-- 房屋图片 -->
+<div class="modal fade" id="houseImgModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" id="houseImgTitle">房屋图片</h4>
+            </div>
+            <div class="modal-body" id="houseImg">
+
+            </div>
+            <div class="modal-footer" style="clear:both;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 房屋配置 -->
+<div class="modal fade" id="houseConfigModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">房屋配置</h4>
+            </div>
+            <div class="modal-body" id="houseConfig">
+
+            </div>
+            <div class="modal-footer" style="clear:both;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+<!-- 房屋地址 -->
+<div class="modal fade" id="houseAddressModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title">房屋地址</h4>
+            </div>
+            <div class="modal-body" id="houseAddress">
+
+            </div>
+            <div class="modal-footer" style="clear:both;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!-- 房屋描述 -->
+<div class="modal fade" id="houseDescModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                <h4 class="modal-title" >房屋描述</h4>
+            </div>
+            <div class="modal-body" id="houseDesc">
+
+            </div>
+            <div class="modal-footer" style="clear:both;">
+                <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div>
+
+
+<!-- /.modal -->
+<script>
+    $(function() {
+        //获取json数组的长度
+        function getJsonObjLength(jsonObj) {
+            var Length = 0;
+            for (var item in jsonObj) {
+                Length++;
+            }
+              return Length;
+        }
+
+        //房屋配置
+        $('#houseCheckTableWrapper').on('click','.houseConfig',function(e){
+            $('#houseConfig').html($(this).attr('title'));
+        });
+        //房屋地址
+        $('#houseCheckTableWrapper').on('click','.houseAddress',function(e){
+            $('#houseAddress').html($(this).attr('title'));
+        });
+        //房屋描述
+        $('#houseCheckTableWrapper').on('click','.houseDesc',function(e){
+            $('#houseDesc').html($(this).attr('title'));
+        });
+        //房屋图片
+       $('#houseCheckTableWrapper').on('click','.houseImg',function(e){
+           var id = $(this).data('id');
+           var form = $('#app-form').serialize();
+           ajaxReturnPage("/admin/house_check/houseImg?"+form, 'post', {id:id}, '#houseImg');
+       });
+
+    });
+</script>
+
+<script src="__ADMIN__/assets/js/swiper.min.js"></script>
+<link href="__ADMIN__/assets/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: 3000,//可选选项，自动滑动
+        loop : true,
+        autoplayDisableOnInteraction : true
+    });
+   /* 删除点击事件*/
+   $('#houseCheckTableWrapper').on('click','.delete',function(){
+       var id = $(this).data('id');
+       swal({
+           title: "确定删除吗?",
+           type: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#DD6B55",
+           confirmButtonText: "确定",
+           cancelButtonText: '取消',
+           closeOnConfirm: false
+       }, function(){
+           $.ajax({
+               url : "{:url('house/delete')}",
+               type: "post",
+               data:{id:id},
+               dataType:"json",
+               success:function(data){
+                   if(data.status==1){
+                       swal({
+                           title: "您已成功删除这条信息",
+                           type: 'success',
+                           confirmButtonText: '确认'
+                       },function() {
+                           var form = $('#app-form').serialize();
+                           ajaxReturnPage("/admin/house_check/refresh?"+form, 'post', {}, '#houseCheckTableWrapper');
+                       });
+                   }else{
+                       swal(data.msg, "", "error");
+                   }
+               }
+           });
+       });
+
+   });
+
+   //搜索
+   $('#app-search').click(function(){
+       var form = $('#app-form').serialize();
+       var href = "/admin/house_check/index?" + form;
+       $(this).attr('href',href);
+   });
+
+   //审核通过和不通过点击事件
+   $('#houseCheckTableWrapper').on('click','.status',function(e){
+       e.preventDefault();
+       var id = $(this).data('id');
+       var status = $(this).data('status');
+       var form = $('#app-form').serialize();
+       ajaxReturnPage("/admin/house_check/updateStatus?"+form, 'post', {id:id,status:status}, '#houseCheckTableWrapper');
+
+   })
+
+
+
+</script>
+
+
+
+
+

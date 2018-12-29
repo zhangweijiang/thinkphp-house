@@ -1,0 +1,49 @@
+<style>
+
+    li.main_info em{
+        width:120px;
+        height:20px;
+        line-height:20px;
+        font-style: normal !important;
+        font-weight:bold;
+        float:left;
+    }
+    li.main_info span{
+        float:left;
+        height:20px;
+        line-height:20px;
+    }
+    li.main_info{
+        clear:both;
+    }
+    li.main_info{
+        padding:5px 0;
+    }
+</style>
+<div class="row">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">系统信息</h3>
+        </div>
+        <div class="panel-body home-info">
+            <ul class="list-unstyled">
+                {volist name="info" id="vo"}
+                    <li class="main_info"><em>{$key}</em> <span>{$vo}</span></li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">基本信息</h3>
+        </div>
+        <div class="panel-body home-info">
+            <ul class="list-unstyled">
+                {volist name="info1" id="vo"}
+                    <li class="main_info"><em>{$key}</em> <span>{$vo}</span></li>
+                {/volist}
+            </ul>
+        </div>
+    </div>
+</div>

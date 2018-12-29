@@ -1,0 +1,373 @@
+{extend name="public/base" /}
+{block name="style"}
+<style>
+    body {
+        background: #f5f5f5;
+    }
+
+    .user-main .main-right .tab-pane .file {
+        position: relative;
+        width: 78px;
+        height: 39px;
+        overflow: hidden;
+        margin: 20px 0;
+    }
+
+    .user-main .main-right p {
+        font-size: 12px;
+        line-height: 30px;
+        color: #999;
+    }
+
+    .user-main .main-right .preview p {
+        color: #333;
+        font-size: 14px;
+        position: relative;
+        top: -10px;
+    }
+
+    .user-main .main-right .preview .preview-box {
+        background: #f5f5f5;
+        height: 196px;
+        padding-top: 47px;
+        box-sizing: content-box;
+    }
+
+    .user-main .main-right .preview .preview-box .box-w {
+        width: 445px;
+    }
+
+    .user-main .main-right .preview .preview-box .box-w div {
+        display: inline-block;
+        vertical-align: middle;
+        box-sizing: content-box;
+    }
+
+    .user-main .main-right .preview .preview-box .preview-3x {
+        width: 120px;
+        height: 120px;
+        overflow: hidden;
+        margin-right: 50px;
+        margin-left: 35px;
+    }
+
+    .user-main .main-right .preview .preview-box .preview-2x {
+        width: 80px;
+        height: 80px;
+        overflow: hidden;
+        margin-right: 50px;
+    }
+
+    .user-main .main-right .preview .preview-box .preview-1x {
+        width: 34px;
+        height: 34px;
+        overflow: hidden;
+    }
+
+    .user-main .main-right .preview .preview-box .preview-3x img,
+    .user-main .main-right .preview .preview-box .preview-2x img,
+    .user-main .main-right .preview .preview-box .preview-1x img {
+        width: 100%;
+        height: 100%;
+    }
+
+    .user-main .main-right .preview .preview-box span {
+        display: inline-block;
+        width: 120px;
+        text-align: center;
+        margin-left: 35px;
+        padding-top: 15px;
+    }
+
+    .user-main .main-right .preview .preview-box span.text-1 {
+        width: 100px;
+        margin-left: 0;
+    }
+
+    .user-main .main-right .suc {
+        display: none;
+    }
+
+    .user-main .main-right .suc span {
+        background: #53ab6c;
+        color: #fff;
+        display: block;
+        width: 85px;
+        height: 35px;
+        line-height: 35px;
+        margin: 20px auto;
+        text-align: center;
+        cursor: pointer;
+    }
+
+    .user-main .main-right .suc span:hover {
+        background: #4FAC8C;
+    }
+
+    .user-main .main-right .change-info {
+        width: 350px;
+        margin: 100px auto;
+    }
+
+    .user-main .main-right .change-info li {
+        clear: both;
+        padding-top: 15px;
+        box-sizing: content-box;
+    }
+
+    .user-main .main-right .change-info span {
+        width: 95px;
+        display: inline-block;
+        font-size: 14px;
+    }
+
+    .user-main .main-right .change-info input[type=text],
+    .user-main .main-right .change-info input[type=password] {
+        width: 237px;
+        height: 38px;
+        border: 1px solid #c8c8c8;
+        padding: 0 5px;
+    }
+
+    .lj-btn {
+        width: 335px;
+        height: 40px;
+        padding: 0 5px;
+        background-color: #4fac6a;
+        cursor: pointer;
+        color: #fff;
+        text-align: center;
+        vertical-align: middle;
+        line-height: 40px;
+        -webkit-user-select: none;
+        display: inline-block;
+    }
+
+    a.lj-btn {
+        text-decoration: none;
+    }
+
+    .lj-btn:hover {
+        background-color: #4FAC8C;
+    }
+
+</style>
+{/block}
+{block name="body"}
+ <div class="user-main container clearfix">
+        <div class="row">
+            <div class="main-left pull-left">
+                <div class="name">
+                    <img src="__UPLOAD__/{$data.user_img}">
+                </div>
+                <div class="user-name">欢迎你，{$data.username}</div>
+                <ul>
+                    <li><a href="{:url('pc/attention/index')}">关注的房源</a></li>
+                    <li class="active"><a href="{:url('pc/personal/index')}">编辑资料</a></li>
+                </ul>
+            </div>
+            <div class="main-right pull-right">
+                <div class="title">我的账户信息</div>
+                <ul class="tab">
+                    <li class="active" data-target="updatePortrait"><a href="javascript:">上传头像</a></li>
+                    <li data-target="updatePerson"><a href="javascript:">基本信息</a></li>
+                    <li data-target="updatePwd"><a href="javascript:">修改密码</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div class="tab-pane" data-target="updatePortrait">
+                        <form action="javascript:void(0)" id="uploadImg">
+                            <div class="file">
+                                <input id="file-img" class="hide" type="file" name="user_img">
+                                <a href="javascript:" class="btn btn-success" id="uploadBtn">选择图片</a>
+                            </div>
+                            <div class="preview">
+                                <p>预览</p>
+                                <div class="preview-box">
+                                    <div class="box-w">
+                                        <div class="preview-3x">
+                                            <img src="__PC__/images/avatar.png">
+                                        </div>
+                                        <div class="preview-2x">
+                                            <img src="__PC__/images/avatar.png">
+                                        </div>
+                                        <div class="preview-1x">
+                                            <img src="__PC__/images/avatar.png">
+                                        </div>
+                                        <span class="text-3">120px*120px</span>
+                                        <span class="text-2">80px*80px</span>
+                                        <span class="text-1">34px*34px</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="suc"><span class="sucSubmit" id="uploadSubmit">确定</span></div>
+                        </form>
+                    </div>
+                    <div class="tab-pane" data-target="updatePerson">
+                        <form action="javascript:void(0)" id="updatePerson">
+                            <ul class="change-info">
+                                <li>
+                                    <span>昵称(账号)：</span><input type="text" name="username" placeholder="请输入昵称" value="{$data.username}">
+                                </li>
+                                <li>
+                                    <span>性别：</span>
+                                    <input class="radio-success" type="radio" name="sex" value="1" {notempty name="data['sex']"}{eq name="data['sex']" value="1"}checked{/eq}{/notempty}>男
+                                    <input class="radio-success" type="radio" name="sex" value="2" {notempty name="data['sex']"}{eq name="data['sex']" value="2"}checked{/eq}{/notempty} >女
+                                </li>
+                                <li>
+                                    <span>手机号：</span><input type="text" name="tel" placeholder="请输入手机号" value="{$data.tel}">
+                                </li>
+                                <li>
+                                    <span>邮箱地址：</span><input type="text" name="email" placeholder="请输入邮箱地址" value="{$data.email}">
+                                </li>
+                                <li>
+                                    <span>身份证号：</span><input type="text" name="card" placeholder="请输入身份证号" value="{$data.card}">
+                                </li>
+                                <li><a class="infoSubmit lj-btn" id="infoSubmit">保存修改</a></li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="tab-pane" data-target="updatePwd">
+                        <form action="javascript:void(0)" id="updatePwd">
+                            <ul class="change-info">
+                                <li>
+                                    <span>输入旧密码：</span><input type="password" name="password" id="password" placeholder="请输入密码">
+                                </li>
+                                <li>
+                                    <span>设置新密码：</span><input type="password" name="newPassword" id="password1" placeholder="请输入新密码">
+                                </li>
+                                <li>
+                                    <span>确认新密码：</span><input type="password" id="password2" placeholder="请确认新密码">
+                                </li>
+                                <li><a class="pwdSubmit lj-btn" id="pwdSubmit">保存修改</a></li>
+                            </ul>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   {/block}
+{block name="script"}
+<script>
+    $(function () {
+        // 获取图片路径
+        function fnGetPath (obj) {
+            if (obj) {
+                //古代浏览器,IE7、8、9
+                if (navigator.userAgent.indexOf("MSIE") > 0 && !(navigator.userAgent.indexOf("MSIE 10.0") > 0)) {
+                    //IE7、8、9浏览器特殊处理,要先Select一下获取所选的内容,但是选中情况下不能获取所以要执行blur()再获取
+                    obj.select();
+                    obj.blur();
+                    //IE下取得图片的本地路径
+                    return document.selection.createRange().text;
+                } else {
+                    //如果支持files对象表示是现代浏览器
+                    if (obj.files) {
+                        var objectURL = window.URL.createObjectURL(obj.files[0]);
+
+                        return objectURL;
+                    }
+                    //基本不可能用到
+                    return obj.value;
+                }
+            }
+        }
+
+        $('#uploadBtn').on('click', function () {
+            $('#file-img').trigger('click');
+        });
+
+        $('#file-img').on('change', function () {
+            var that = this ,
+                src = $(this).val();
+            if (src.indexOf(".jpg") > 0 || src.indexOf(".jpeg") > 0 || src.indexOf(".JPG") > 0 || src.indexOf(".JPEG") > 0) {
+                $('.tab-pane[data-target="updatePortrait"] img').attr('src', fnGetPath(that));
+                $('.tab-pane[data-target="updatePortrait"] .suc').show();
+            } else {
+                layer.msg('请上传格式为jpg、jpeg的图片！');
+                $(this).val('');
+            }
+        });
+
+        //头像点击事件
+        $('#uploadSubmit').click(function(){
+           var data = new FormData(document.getElementById('uploadImg'));
+            $.ajax({
+                url:"/pc/personal/imgsave",
+                type:"post",
+                data:data,
+                dataType:"json",
+                contentType: false,
+                processData: false,
+                success:function(data) {
+                    layer.msg(data.msg, {icon: 1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }
+            });
+        });
+
+        //个人信息保存点击事件
+        $('#infoSubmit').click(function(){
+            var  tel_reg =/^1[3|4|5|6|7|8|9][0-9]{9}$/;
+            var card_reg =  /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            var email_reg = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
+            var tel = $("input[name='tel']").val();
+            var card = $("input[name='card']").val();
+            var email = $("input[name='email']").val();
+            if(tel!=""&&!tel_reg.test(tel)){
+                layer.msg('手机格式不正确，请重新输入');
+                return false;
+            }
+            if(tel!=""&&!card_reg.test(card)){
+                layer.msg('身份证格式不正确');
+                return false;
+            }
+            if(tel!=""&&!email_reg.test(email)){
+                layer.msg('邮箱格式输入不正确');
+                return false;
+            }
+            var data = $('#updatePerson').serialize();
+            $.ajax({
+                url:"/pc/personal/save",
+                type:"post",
+                data:data,
+                dataType:"json",
+                success:function(data) {
+                    layer.msg(data.msg, {icon: 1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }
+            });
+        });
+
+        //密码保存点击事件
+        $('#pwdSubmit').click(function(){
+            var data = $('#updatePerson').serialize();
+            var password = $('#password').val();
+            var password1 = $('#password1').val();
+            var password2 = $('#password2').val();
+            if(password==""){
+                layer.msg('请输入新密码');
+                return false;
+            }
+            if(password1!=password2){
+                layer.msg('两次密码输入不一致');
+                return false;
+            }
+            $.ajax({
+                url:"/pc/personal/savepwd",
+                type:"post",
+                data:{'password':password,'password1':password1},
+                dataType:"json",
+                success:function(data) {
+                    layer.msg(data.msg, {icon: 1,time:2000},function(){
+                        window.location.reload();
+                    });
+                }
+            });
+        });
+
+    });
+</script>
+{/block}

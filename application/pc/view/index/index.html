@@ -1,0 +1,245 @@
+<!--
+* ......................我佛慈悲......................
+*                       _oo0oo_
+*                      o8888888o
+*                      88" . "88
+*                      (| -_- |)
+*                      0\  =  /0
+*                    ___/`---'\___
+*                  .' \\|     |// '.
+*                 / \\|||  :  |||// \
+*                / _||||| -卍-|||||- \
+*               |   | \\\  -  /// |   |
+*               | \_|  ''\---/''  |_/ |
+*               \  .-\__  '-'  ___/-. /
+*             ___'. .'  /--.--\  `. .'___
+*          ."" '<  `.___\_<|>_/___.' >' "".
+*         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+*         \  \ `_.   \_ __\ /__ _/   .-` /  /
+*     =====`-.____`.___ \_____/___.-`___.-'=====
+*                       `=---='
+*
+*..................佛祖开光 ,永无BUG...................
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>首页</title>
+    <link rel="stylesheet" href="__PC__/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="__PC__/plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="__PC__/css/plugins.reset.css">
+    <link rel="stylesheet" href="__PC__/css/common.css">
+    <link rel="stylesheet" href="__PC__/css/icon.css">
+    <link rel="stylesheet" href="__PC__/css/home.css">
+    <link rel="stylesheet" href="__PC__/css/index.css">
+</head>
+<body class="loaded">
+<div class="wrapper">
+    <div class="header">
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <a href="index.html" title="链家网" class="logo" target="_self">
+                        <h1 class="index_h1">链家网</h1>
+                    </a>
+                </div>
+                <div class="pull-right">
+                    <div class="nav typeUserInfo">
+                        <div class="ti-hover">
+                            <div class="typeShowUser">
+                                {notempty name="$Think.session.user"}
+                                <i></i>
+                                <a href="{:url('pc/personal/index')}" rel="nofollow"><span>{$Think.session.user.username}</span></a>
+                                <span class="welcome">
+                                    <a class="reg" href="{:url('pc/user/logout')}" target="_self">退出</a>
+                                </span>
+                                {else/}
+                                <span class="welcome">
+                                    <a class="btn-login bounceIn actLoginBtn" href="{:url('pc/user/index')}?type=2">
+                                        <span class="reg">登录</span>
+                                    </a>
+                                    <a class="btn-register" href="{:url('pc/user/index')}?type=1">
+                                        <span class="log">立即注册</span>
+                                    </a>
+                                </span>
+                                {/notempty}
+                            </div>
+                            <div class="user-news" id="userNews">
+                            </div>
+                        </div>
+                        <ul>
+                            <li><a class="" href="{:url('pc/second_hand_house_list/index')}">二手房</a></li>
+                            <li><a class="" href="{:url('pc/new_house_list/index')}">新房</a></li>
+                            <li><a class="" href="{:url('pc/rent_house_list/index')}">租房</a></li>
+                            <!--<li><a class="" href="#" target="_blank">工具</a></li>-->
+                            <li class="real">
+                                <i></i><a class="" href="{:url('pc/lease/index')}" target="_blank">业主委托</a>
+                            </li>
+                            <li><a class="" href="{:url('admin/login/index')}" target="_blank">中介登录</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="header-wrap">
+                    <div class="wrap-ico"></div>
+                    <div class="house-num">
+                        今日租房在售、在租房屋 28285 套
+                    </div>
+                    <div class="search-box-wrap">
+                        <div class="search-box-con">
+                            <input class="text pull-left txt searchVal" name="keyword" placeholder="请输入名称"
+                                   id="searchInput">
+                            <input class="btn home-ico ico-search pull-left" id="btn-search" type="button" value="开始找房">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="home-nav">
+        <ul class="count-4 clearfix">
+            <li class="hvr-bob">
+                <a href="{:url('pc/second_hand_house_list/index')}">
+                    <img src="__PC__/images/widget1.png">
+                    <b>找二手房</b>
+                    <p>真实二手房源，链家承诺真实在售所见即真</p>
+                </a>
+            </li>
+            <li class="hvr-bob">
+                <a href="{:url('pc/second_hand_house_list/index')}">
+                    <img src="__PC__/images/widget2.png">
+                    <b>地图找房</b>
+                    <p>为您精准定位，位置周边配套设施一览无余</p>
+                </a>
+            </li>
+            <li class="hvr-bob">
+                <a href="#">
+                    <img src="__PC__/images/widget3.png">
+                    <b>房屋估价</b>
+                    <p>基于海量成交数据，帮您合理定价预估市值</p>
+                </a>
+            </li>
+            <li class="hvr-bob">
+                <a href="{:url('pc/second_hand_house_list/index')}">
+                    <img src="__PC__/images/widget4.png">
+                    <b>找地铁房</b>
+                    <p>房源紧邻地铁站，交通出行更方便说走就走</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <div class="ershoufang">
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <div class="name"></div>
+                    <p>好房源那么多，我们为你精选，链家网会越来越懂你<a href="{:url('pc/second_hand_house_list/index')}" target="_blank">更多二手房</a></p>
+                </div>
+                <div class="clearfix"></div>
+                <ul>
+                    {volist name="secondHandHouseList" id="vo"}
+                    <li>
+                        <a href="{:url('pc/second_hand_house/index')}?id={$vo.id}">
+                            <div class="wrap">
+                                <img src="__UPLOAD__/{$vo.img}"
+                                     alt="{$vo.title}">
+                                <span class="price">{$vo.total_money}万</span>
+                                <div class="bottom">
+                                    <p class="p01">{$vo.title}</p>
+                                    <p class="tips">
+                                        <span>{$vo.name}</span>
+                                        <span>{$vo.shi}室{$vo.ting}厅</span>
+                                        <span>{$vo.building_acreage}平米</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="new-house">
+        <div class="container">
+            <div class="row">
+                <div class="pull-left">
+                    <div class="name"></div>
+                    <p>真实信息准确同步，楼盘动态一手掌握<a href="{:url('pc/new_house_list/index')}" target="_blank">更多新房</a></p>
+                </div>
+                <div class="newhouse-list">
+                    <ul>
+                        {volist name="newHouseList" id="vo"}
+                            <li>
+                            <a href="{:url('pc/new_house/index')}?id={$vo.id}">
+                                <img src="__UPLOAD__/{$vo.img}"
+                                     alt="{$vo.name}">
+                                <div class="bg"></div>
+                                <div class="title">
+                                    {$vo.name}
+                                    <span>
+                                        <label>{$vo.money}</label>元/平
+                                    </span>
+                                </div>
+                            </a>
+                        </li>
+                        {/volist}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="f-title">
+                    <div class="pull-left">
+                        <ul>
+                            <li><a href="#" rel="nofollow" target="_blank">了解链家</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">关于链家</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">联系我们</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">加入我们</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">隐私声明</a></li>
+                            <li><a href="#" target="_blank">网站地图</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">友情链接</a></li>
+                            <li><a href="#" rel="nofollow" target="_blank">管理员登录</a></li>
+                        </ul>
+                    </div>
+                    <div class="pull-right">官方客服 1010 9666</div>
+                </div>
+                <div class="link-box clearfix">
+                    <div class="pull-left">
+                        <div class="tab"><span class="hover">房贷计算器</span></div>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="copyright pull-left">链家网（北京）科技有限公司 | 网络经营许可证 京ICP备16057509号-2 | © Copyright©2010-2018
+                        链家网Lianjia.com版权所有
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+
+<script src="__PC__/plugins/jquery/jquery.min.js"></script>
+<script src="__PC__/plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="__PC__/plugins/layui/layui.all.js"></script>
+<script src="__PC__/plugins/validator/validator.min.js"></script>
+<script src="__PC__/plugins/sweetalert/sweetalert2.all.min.js"></script>
+
+<script src="__PC__/js/common.js"></script>
+<script>
+    $('#btn-search').click(function(){
+        var search = $('#searchInput').val();
+        window.location.href = "/pc/second_hand_house_list/index?search="+search;
+    })
+</script>
+</body>
+</html>

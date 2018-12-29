@@ -1,0 +1,140 @@
+
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="panel">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="m-b-0">
+                    <a  class="btn btn-default btn-md waves-effect waves-light m-b-0"  href="/admin/house_config/set" data-loader="true" data-title="房屋配置设置">添加 <i class="fa fa-plus"></i> </a>
+                </div>
+            </div>
+
+            <div class="col-sm-4">
+                <form action="" id="app-form">
+                        <div class="dataTables_length">
+                            <label for="title" style="width:90px;float:left;height:28px;line-height:30px;">名称</label>
+                            <input type="text" name="name" class="form-control input-sm" style="width:40%;float:left;" value="{$name|default=''}">
+                            <a  id="app-search" class="btn btn-default waves-effect waves-light " style="margin-left:13px;" href="/admin/house_config/index" data-loader="true" data-title="房屋配置列表">搜索 </a>
+                        </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+    <div class="col-sm-12">
+        <div class="card-box" id="houseConfigTableWrapper">
+            <table id="demo-foo-filtering" data-toggle="table"
+                   data-page-size="10"
+                   data-pagination="true" class="table-bordered ">
+                <thead>
+                <tr>
+                    <th data-checkbox="true"></th>
+                    <th data-switchable="false">房屋配置名称</th>
+                    <th>房屋配置图片</th>
+                    <th>添加时间</th>
+                    <th class="text-center">操作</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                {volist name="list" id="vo"}
+                    <tr>
+                        <td></td>
+                        <td>{$vo.name}</td>
+                        <td><img src="/upload/{$vo.filename}" alt="" style="width:30px;height:30px;"></td>
+                        <td>{$vo.add_time|date='Y-m-d',###}</td>
+                        <td>
+                            <a href="javascript:void(0);" class="btn btn-danger delete" data-id="{$vo['id']}">刪除</a>
+                            <a  class="btn btn-info" href="/admin/house_config/set?id={$vo.id}" data-loader="true" data-title="房屋配置设置">编辑</a>
+                        </td>
+                    </tr>
+                {/volist}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+    </div>
+</div>
+<!--===================================================-->
+
+<script>
+    $(function() {
+        //获取json数组的长度
+        function getJsonObjLength(jsonObj) {
+            var Length = 0;
+            for (var item in jsonObj) {
+                Length++;
+            }
+              return Length;
+        }
+
+    });
+</script>
+
+<script src="__ADMIN__/assets/js/swiper.min.js"></script>
+<link href="__ADMIN__/assets/css/swiper.min.css" rel="stylesheet" type="text/css" />
+
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: 3000,//可选选项，自动滑动
+        loop : true,
+        autoplayDisableOnInteraction : true
+    });
+   /* 删除点击事件*/
+   $('#houseConfigTableWrapper').on('click','.delete',function(){
+       var id = $(this).data('id');
+       swal({
+           title: "确定删除吗?",
+           type: "warning",
+           showCancelButton: true,
+           confirmButtonColor: "#DD6B55",
+           confirmButtonText: "确定",
+           cancelButtonText: '取消',
+           closeOnConfirm: false
+       }, function(){
+           $.ajax({
+               url : "{:url('house_config/delete')}",
+               type: "post",
+               data:{id:id},
+               dataType:"json",
+               success:function(data){
+                   if(data.status==1){
+                       swal({
+                           title: "您已成功删除这条信息",
+                           type: 'success',
+                           confirmButtonText: '确认'
+                       },function() {
+                           var form = $('#app-form').serialize();
+                           ajaxReturnPage("/admin/house_config/refresh?"+form, 'post', {}, '#houseConfigTableWrapper');
+                       });
+                   }else{
+                       swal(data.msg, "", "error");
+                   }
+               }
+           });
+       });
+
+   });
+
+   //搜索
+   $('#app-search').click(function(){
+       var form = $('#app-form').serialize();
+       var href = "/admin/house_config/index?" + form;
+       $(this).attr('href',href);
+   });
+
+
+
+
+
+</script>
+
+
+
+
+

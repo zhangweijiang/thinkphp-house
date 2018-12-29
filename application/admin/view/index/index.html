@@ -1,0 +1,322 @@
+﻿<!--
+* ......................我佛慈悲......................
+*                       _oo0oo_
+*                      o8888888o
+*                      88" . "88
+*                      (| -_- |)
+*                      0\  =  /0
+*                    ___/`---'\___
+*                  .' \\|     |// '.
+*                 / \\|||  :  |||// \
+*                / _||||| -卍-|||||- \
+*               |   | \\\  -  /// |   |
+*               | \_|  ''\---/''  |_/ |
+*               \  .-\__  '-'  ___/-. /
+*             ___'. .'  /--.--\  `. .'___
+*          ."" '<  `.___\_<|>_/___.' >' "".
+*         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+*         \  \ `_.   \_ __\ /__ _/   .-` /  /
+*     =====`-.____`.___ \_____/___.-`___.-'=====
+*                       `=---='
+*
+*..................佛祖开光 ,永无BUG...................
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="house.loves.org.cn">
+    <meta name="author" content="house.loves.org.cn">
+    <link rel="shortcut icon" href="__ADMIN__/assets/images/favicon_1.ico">
+    <title>后台管理系统</title>
+    <!--Morris Chart CSS -->
+    <link href="__ADMIN__/assets/plugins/bootstrap-table/dist/bootstrap-table.min.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" href="__ADMIN__/assets/plugins/morris/morris.css">
+    <link href="__ADMIN__/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+    <link href="__ADMIN__/assets/css/core.css" rel="stylesheet" type="text/css"/>
+    <link href="__ADMIN__/assets/css/components.css" rel="stylesheet" type="text/css"/>
+    <link href="__ADMIN__/assets/css/icons.css" rel="stylesheet" type="text/css"/>
+    <link href="__ADMIN__/assets/css/pages.css" rel="stylesheet" type="text/css"/>
+    <link href="__ADMIN__/assets/css/responsive.css" rel="stylesheet" type="text/css"/>
+</head>
+<body class="fixed-left">
+<!-- Begin page -->
+<div id="wrapper">
+    <!-- Top Bar Start -->
+    <div class="topbar">
+        <!-- LOGO -->
+        <div class="topbar-left">
+            <div class="text-center">
+                <a href="index.html" class="logo"><i class="icon-magnet icon-c-logo"></i><span>Ub<i class="md md-album"></i>ld</span></a>
+            </div>
+        </div>
+        <!-- Button mobile view to collapse sidebar menu -->
+        <div class="navbar navbar-default" role="navigation">
+            <div class="container">
+                <div class="">
+                    <div class="pull-left">
+                        <button class="button-menu-mobile open-left"><i class="ion-navicon"></i></button>
+                        <span class="clearfix"></span>
+                    </div>
+                    <form role="search" class="navbar-left app-search pull-left hidden-xs">
+                        <input type="text" placeholder="Search..." class="form-control">
+                        <a href=""><i class="fa fa-search"></i></a>
+                    </form>
+                    <ul class="nav navbar-nav navbar-right pull-right">
+                        <li class="dropdown hidden-xs" id="message_count_click">
+                            <a href="javascript:void(0);" data-target="#" class=" waves-effect waves-light" data-toggle="dropdown" aria-expanded="true">
+                                <i class="icon-bell"></i> <span class="badge badge-xs badge-danger" id="message_count">{$message_count}</span> </a>
+                        </li>
+                        <li class="hidden-xs">
+                            <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="icon-size-fullscreen"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="javascript:void(0);" class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true"><img src="/upload/{$user_img}" alt="user-img" class="img-circle">
+                            </a>
+                            <ul class="dropdown-menu">
+                                {if condition="$type eq 1"}
+                                    <li><a href="{:url('admin/agency/set')}?id={$id|default=''}" data-loader="true" data-title="个人设置"><i class="ti-settings m-r-5" ></i> 个人设置</a></li>
+                                {else/}
+                                    <li><a href="{:url('admin/Admin/set')}?id={$id|default=''}" data-loader="true" data-title="个人设置"><i class="ti-settings m-r-5" ></i> 个人设置</a></li>
+                                {/if}
+                                <li><a href="{:url('Login/logout')}"><i class="ti-power-off m-r-5"></i> 退出</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <!--/.nav-collapse -->
+            </div>
+        </div>
+    </div>
+    <!-- Top Bar End -->
+    <!-- ========== Left Sidebar Start ========== -->
+    <div class="left side-menu">
+        <div class="sidebar-inner slimscrollleft">
+            <!--- Divider -->
+            <div id="sidebar-menu">
+                <ul>
+                    <li class="text-muted menu-title">菜单栏</li>
+                    <!--系统首页-->
+                    <li><a id="app-home" href="/admin/Index/main" data-loader="true" data-title="Dashboard"><i class="ti-home"></i> <span> 系统首页 </span> </a>
+
+                    </li>
+                    <!--系统首页-->
+                    <!--权限管理-->
+                    {in name="adminoath" value="$oath"}
+                    <li><a href="javascript:void(0);" class="waves-effect"><i class="glyphicon glyphicon-wrench"></i> <span> 权限管理 </span>
+                    </a>
+                        <ul class="list-unstyled">
+                            <li class="active">
+                                <a id="admin_oath" href="/admin/admin_oath/index" data-loader="true" data-title="权限管理">权限列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {/in}
+                    <!--权限管理-->
+                    <!--系统管理员-->
+                    {in name="admin" value="$oath"}
+                    <li><a href="javascript:void(0);" class="waves-effect"><i class="ion-person-stalker"></i> <span> 系统管理员 </span> </a>
+                        <ul class="list-unstyled">
+                            <li class="active">
+                                <a id="admin" href="/admin/admin/index" data-loader="true" data-title="管理员列表">管理员列表</a>
+                            </li>
+                        </ul>
+                    </li>
+                    {/in}
+                    <!--系统管理员-->
+                    <!--用户管理-->
+                    {in name="user" value="$oath"}
+                    <li><a href="javascript:void(0);" class="waves-effect"><i class="ion-person"></i> <span> 用户管理 </span> </a>
+                        <ul class="list-unstyled">
+                            {in name="user" value="$oath"}
+                            <li class="active">
+                                <a id="user" href="/admin/user/index" data-loader="true" data-title="普通用户列表">普通用户列表</a>
+                            </li>
+                            {/in}
+                            {in name="agency" value="$oath"}
+                            <li class="active">
+                                <a id="agency" href="/admin/agency/index" data-loader="true" data-title="中介用户列表">中介用户列表</a>
+                            </li>
+                            {/in}
+                        </ul>
+                    </li>
+                    {/in}
+                    <!--用户管理-->
+                    <!--房屋管理-->
+                    <li><a href="javascript:void(0);" class="waves-effect"><i class="glyphicon glyphicon-home"></i> <span> 房屋管理 </span>
+                    </a>
+                        <ul class="list-unstyled">
+                            {in name="house" value="$oath"}
+                            <li class="active">
+                                <a id="house" href="/admin/house/index" data-loader="true" data-title="房屋出租列表">房屋出租列表</a>
+                            </li>
+                            {/in}
+                            {in name="houseconfig" value="$oath"}
+                            <li class="active">
+                                <a id="houseConfig" href="/admin/house_config/index" data-loader="true" data-title="房屋配置列表">房屋配置列表</a>
+                            </li>
+                            {/in}
+                            {in name="housecheck" value="$oath"}
+                            <li class="active">
+                                <a id="houseCheck" href="/admin/house_check/index" data-loader="true" data-title="房屋审核列表">房屋审核列表</a>
+                            </li>
+                            {/in}
+                            {in name="housedepute" value="$oath"}
+                            <li class="active">
+                                <a id="houseDepute" href="/admin/house_depute/index" data-loader="true" data-title="房屋委托列表">房屋委托列表</a>
+                            </li>
+                            {/in}
+                            {in name="house" value="$oath"}
+                            <li class="active">
+                                <a id="selling_house" href="/admin/selling_house/index" data-loader="true" data-title="房屋出售列表">房屋出售列表</a>
+                            </li>
+                            {/in}
+                            {in name="reservations" value="$oath"}
+                            <li class="active">
+                                <a id="reservations" href="/admin/reservations/index" data-loader="true" data-title="预约看房列表">预约看房列表</a>
+                            </li>
+                            {/in}
+                        </ul>
+                    </li>
+                    <!--房屋管理-->
+                    <!--用户服务协议-->
+                    <li><a href="javascript:void(0);" class="waves-effect"><i class="ion-person"></i> <span> 用户服务协议</span> </a>
+                        <ul class="list-unstyled">
+                            <li class="active">
+                                <a id="protocol" href="/admin/protocol/index" data-loader="true" data-title="用户服务协议">用户服务协议</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <!--用户服务协议-->
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
+    <!-- Left Sidebar End -->
+    <!-- ============================================================== -->
+    <!-- Start right Content here -->
+    <!-- ============================================================== -->
+    <div class="content-page">
+        <!-- Start content -->
+        <div class="content">
+            <div class="container" id="page-body">
+                <!-- 主体内容-->
+            </div>
+        </div>
+        <!-- content -->
+        <footer class="footer text-right"> 2017 &copy; house.loves.org.cn</footer>
+    </div>
+    <!-- ============================================================== -->
+    <!-- End Right content here -->
+    <!-- ============================================================== -->
+
+</div>
+<!-- END wrapper -->
+<input type="hidden" id="data-loader">
+
+<script>
+    var resizefunc = [];
+</script>
+<!-- jQuery  -->
+<script src="__ADMIN__/assets/js/jquery.min.js"></script>
+<script src="__ADMIN__/assets/js/bootstrap.min.js"></script>
+<script src="__ADMIN__/assets/js/detect.js"></script>
+<script src="__ADMIN__/assets/js/fastclick.js"></script>
+<script src="__ADMIN__/assets/js/jquery.slimscroll.js"></script>
+<script src="__ADMIN__/assets/js/jquery.blockUI.js"></script>
+<script src="__ADMIN__/assets/js/waves.js"></script>
+<script src="__ADMIN__/assets/js/wow.min.js"></script>
+<script src="__ADMIN__/assets/js/jquery.nicescroll.js"></script>
+<script src="__ADMIN__/assets/js/jquery.scrollTo.min.js"></script>
+<!-- jQuery  -->
+<script src="__ADMIN__/assets/js/jquery.core.js"></script>
+<script src="__ADMIN__/assets/js/jquery.app.js"></script>
+
+<script src="__ADMIN__/assets/plugins/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<script src="__ADMIN__/assets/pages/jquery.bs-table.js"></script>
+
+<!-- Sweet-Alert  -->
+<script src="__ADMIN__/assets/js/sweetalert2.min.js"></script>
+<link href="__ADMIN__/assets/plugins/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css">
+<script src="__ADMIN__/assets/plugins/sweetalert/dist/sweetalert.min.js"></script>
+<script src="__ADMIN__/assets/js/validator/validator.min.js"></script>
+<script src="__ADMIN__/assets/js/layui/layui.all.js"></script>
+<link rel="stylesheet" href="__ADMIN__/assets/js/summernote/dist/summernote.css">
+<script src="__ADMIN__/assets/js/summernote/dist/summernote.js"></script>
+<script src="__ADMIN__/assets/js/summernote/dist/lang/summernote-zh-CN.js"></script>
+<script type="text/javascript">
+    var AppDataLoader = $('#data-loader');
+    //主导航高亮
+    var AppLuLi = $('.list-unstyled');
+    //初始化主框架加载后的操作
+    $(document).on('click', 'a', function (e) {
+        var loader = $(this).data('loader');
+        if (loader == true) {
+            var href = $(this).attr('href');
+            var title = $(this).data('title');
+            var li = $(this).parent('li');
+            $(AppLuLi).removeClass('active');
+            $(li).addClass('active');
+            $(AppDataLoader).attr('href', href).data('loader', 'true').data('title', title);
+            $('#sidebar-menu>ul>li>a').removeClass('active');
+            $(this).addClass('active')
+            $('#page-body').empty().load(href, function () {
+                //加载bootstrap-table
+                $('[data-toggle="table"]').bootstrapTable();
+            });
+            return false;
+        }
+    });
+
+    $('#app-home').trigger('click');
+
+    /***
+     * ajax请求返回页面（实现局部刷新）
+     * @param url 请求路径
+     * @param method 请求方法POST/GET
+     * @param params 请求参数
+     * @param container 返回页面数据存放容器
+     * @param callback 回调函数
+     */
+    function ajaxReturnPage(url, method, params, container, callback) {
+        $.ajax(url, {type: method, data: params}).done(function (response) {
+            response = JSON.parse(response);
+            if (response.status == 1) {
+                $(container).html(response.data);
+                $('[data-toggle="table"]').bootstrapTable();
+                if (callback)
+                    callback();
+
+            } else {
+                swal(response.msg, "", "error");
+            }
+        }).fail(function () {
+            console.error('ajax请求失败！')
+        });
+    }
+
+    //定时请求获取是否有委托信息
+    var setting = {
+        url:'/admin/index/message',
+        type:'post',
+        dataType:'json',
+        success:function(data){
+            $('#message_count').html(data.data);
+        }
+    }
+
+    setInterval(function(){
+        $.ajax(setting);
+    },10000);
+
+    //信息委托跳转事件
+    $('#message_count_click').click(function(){
+        $('#houseDepute').click();
+    });
+
+</script>
+</body>
+</html>

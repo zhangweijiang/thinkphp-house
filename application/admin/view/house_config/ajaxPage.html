@@ -1,0 +1,28 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th data-switchable="false">房屋配置名称</th>
+        <th>房屋配置图片</th>
+        <th>添加时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>{$vo.name}</td>
+        <td></td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td>
+            <a href="javascript:void(0);" class="delete" data-id="{$vo['id']}">刪除</a>
+            <a href="javascript:void(0);" href="/admin/house_config/set?id={$vo.id}" data-loader="true" data-title="房屋配置设置">编辑</a>
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

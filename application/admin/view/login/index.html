@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="house.loves.org.cn">
+    <meta name="author" content="house.loves.org.cn">
+
+    <link rel="shortcut icon" href="__ADMIN__/assets/images/favicon_1.ico">
+
+    <title>后台登录</title>
+
+    <link href="__ADMIN__/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="__ADMIN__/assets/css/core.css" rel="stylesheet" type="text/css" />
+    <link href="__ADMIN__/assets/css/components.css" rel="stylesheet" type="text/css" />
+    <link href="__ADMIN__/assets/css/icons.css" rel="stylesheet" type="text/css" />
+    <link href="__ADMIN__/assets/css/pages.css" rel="stylesheet" type="text/css" />
+    <link href="__ADMIN__/assets/css/responsive.css" rel="stylesheet" type="text/css" />
+    <script src="__ADMIN__/assets/js/modernizr.min.js"></script>
+    <style>
+        .forget{
+            margin-bottom:-35px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="account-pages"></div>
+<div class="clearfix"></div>
+<div class="wrapper-page">
+    <div class=" card-box">
+        <div class="panel-heading">
+            <h3 class="text-center"> &nbsp;&nbsp; <strong class="text-custom">后台登录</strong> </h3>
+        </div>
+
+
+        <div class="panel-body">
+            <form class="form-horizontal m-t-20" action="{:url('Login/index')}" method="post">
+
+                <div class="form-group ">
+                    <div class="col-xs-12">
+                        <input name="username" class="form-control" type="text"  placeholder="用户名" maxlength="25" required value="{$username|default=''}">
+                        <small class="text-danger">{$validate.username|default=''}</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-xs-12">
+                        <input name="password" class="form-control" type="password" required="" placeholder="登录密码">
+                        <small class="text-danger">{$validate.password|default=''}</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-sm-6">
+                        <input name="captcha_code" class="form-control" type="text" placeholder="验证码" style="width: 100%" >
+                    </div>
+                    <div class="col-sm-6" >
+                        <a href="#" onclick="refreshVerify()">
+                            <img class="verify-img" src="{:captcha_src()}" alt="验证码" style="height:36px;"/>
+                        </a>
+                    </div>
+                </div>
+                <div class="form-group" style="padding-left:13px;">
+                    <small class="text-danger">{$validate.captcha_code|default=''}</small>
+                </div>
+
+                <!--<div class="form-group ">
+                    <div class="col-xs-12">
+                        <div class="checkbox checkbox-primary">
+                            <input id="checkbox-signup" type="checkbox">
+                            <label for="checkbox-signup">
+                                Remember me
+                            </label>
+                        </div>
+
+                    </div>
+                </div>-->
+
+
+                <div class="form-group text-center m-t-20">
+                    <div class="col-xs-12">
+                        <button class="btn btn-pink btn-block text-uppercase waves-effect waves-light" type="submit">立即登录</button>
+                        <span class="text-danger">{$error|default=''}</span>
+                    </div>
+                </div>
+
+                <div class="form-group m-t-15 m-b-0">
+                    <div class="col-sm-8">
+                        <a href="{:url('pc/agency/index')}" class="text-dark"><i class="fa fa-user m-r-5"></i>中介注册</a>
+                    </div>
+                    <div class="col-sm-4">
+                        <a href="javascript:void(0)" onclick="sendEmail();" class="text-dark"><i class="fa fa-lock m-r-5"></i> 忘记密码?</a>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+    <!--<div class="row">
+        <div class="col-sm-12 text-center">
+            <p>Don't have an account? <a href="page-register.html" class="text-primary m-l-5"><b>Sign Up</b></a></p>
+
+        </div>
+    </div>-->
+
+</div>
+
+
+
+
+<script>
+    var resizefunc = [];
+</script>
+
+<!-- jQuery  -->
+<script src="__ADMIN__/assets/js/jquery.min.js"></script>
+<script src="__ADMIN__/assets/js/bootstrap.min.js"></script>
+<script src="__ADMIN__/assets/js/detect.js"></script>
+<script src="__ADMIN__/assets/js/fastclick.js"></script>
+<script src="__ADMIN__/assets/js/jquery.slimscroll.js"></script>
+<script src="__ADMIN__/assets/js/jquery.blockUI.js"></script>
+<script src="__ADMIN__/assets/js/waves.js"></script>
+<script src="__ADMIN__/assets/js/wow.min.js"></script>
+<script src="__ADMIN__/assets/js/jquery.nicescroll.js"></script>
+<script src="__ADMIN__/assets/js/jquery.scrollTo.min.js"></script>
+<!-- jQuery  -->
+
+<script src="__ADMIN__/assets/js/jquery.core.js"></script>
+<script src="__ADMIN__/assets/js/jquery.app.js"></script>
+<!--sweetalert2-->
+<link rel="stylesheet" href="__ADMIN__/assets/css/sweetalert2.min.css">
+<script src="__ADMIN__/assets/js/sweetalert2.min.js"></script>
+<script>
+    function refreshVerify() {
+        var ts = Date.parse(new Date()) / 1000;
+        $(".verify-img").attr('src', '/captcha?id=' + ts);
+    }
+    function sendEmail(){
+        swal({
+
+                text: "<form role=\"form\" id=\"form\">\n" +
+                "        <div class=\"form-group forget\">\n" +
+                "        <label for=\"username\">账号</label>\n" +
+                "        <input type=\"text\" class=\"form-control\"  placeholder=\"请输入账号\" name=\"username\" id='forget_username' value=\"\" >\n" +
+                "        </div>" +
+                "        <div class=\"form-group\">\n" +
+                "        <label for=\"username\">邮箱</label>\n" +
+                "        <input type=\"text\" class=\"form-control\"  placeholder=\"请输入邮箱\" name=\"email\"  id='forget_email' value=\"\" >\n" +
+                "        </div>\n" +
+                "     <form>",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "确定",
+                cancelButtonText: "取消",
+                closeOnConfirm: false,
+                closeOnCancel: false
+            }).then(function(isConfirm) {
+            if (isConfirm === true) {
+                var username = $("#forget_username").val();
+                var email = $("#forget_email").val();
+                if(username==''){
+                    swal('请输入账号');
+                    return false;
+                }
+                if(email==''){
+                    swal('请输入邮箱');
+                    return false;
+                }
+                $.ajax({
+                    url:"{:url('Forget/index')}",
+                    type:"post",
+                    dataType:"json",
+                    data:{email:email,username:username},
+                    success:function(data){
+                        if(data.status==1){
+                            swal({
+                                type: 'success',
+                                html: '成功发送邮箱: ' + email + '，请注意查收！'
+                            })
+                        }else if(data.status==0){
+                            swal({
+                                type: 'error',
+                                html: data.msg
+                            })
+                        }
+                    }
+                });
+            } else {
+                // Esc, close button or outside click
+                // isConfirm is undefined
+            }
+        });
+
+    }
+
+
+
+
+
+
+
+</script>
+</body>
+</html>

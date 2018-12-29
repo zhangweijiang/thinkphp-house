@@ -1,0 +1,49 @@
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+    <form  id="form">
+        <input type="hidden" value="{$data.id|default=''}" name="id">
+            <label for="content">用户服务协议</label>
+        <textarea name="content"  cols="30" rows="10" id="content">
+            {$data.content|htmlspecialchars_decode}
+        </textarea>
+
+
+        <button type="submit" class="btn btn-default" id="submit">保存</button>
+    </form>
+<script>
+    //百度编辑器使用
+  /* UE.getEditor('content', {
+        textarea: 'content', //提交字段名，必须填写，数据库必须有此字段
+    });*/
+  //富文本编辑器
+    $('#content').summernote({width:800,height: 450,lang: 'zh-CN'});
+    $('#submit').click(function(e){
+        e.preventDefault();
+        var data = new FormData(document.getElementById('form'));
+        $.ajax({
+            url:"/admin/protocol/save",
+            type:"post",
+            data:data,
+            contentType: false,
+            processData: false,
+            dataType:"json",
+            success:function(data){
+                if(data.status==1){
+                    swal({
+                        title: "保存成功",
+                        type: 'success',
+                        confirmButtonText: '确认'
+                    },function() {
+
+                    });
+                }else{
+                    swal(data.msg, " ","error");
+                }
+            },
+
+        });
+    });
+</script>

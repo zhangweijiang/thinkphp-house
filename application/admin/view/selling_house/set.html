@@ -1,0 +1,381 @@
+
+<!-- Page-Title -->
+<div id="page-title">
+    {$breadhtml}
+</div>
+<!--===================================================-->
+<div class="custom-modal-text text-left" style="width:40%;">
+    <form role="form" id="form">
+        <input type="hidden" value="{$data.id|default=''}" name="id">
+        <div class="form-group">
+            <label for="type">类型</label>
+            <select name="type" class="form-control">
+                <option value="1" {notempty name="data['type']"}{eq name="data['type']" value="1"}selected{/eq}{/notempty} >二手房</option>
+                <option value="2" {notempty name="data['type']"}{eq name="data['type']" value="2"}selected{/eq}{/notempty} >新房</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="title">标题</label>
+            <input type="text" class="form-control"  placeholder="标题" name="title"  value="{$data.title|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="title">小区名称</label>
+            <input type="text" class="form-control"  placeholder="小区名称" name="name"  value="{$data.name|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="desc">小区描述</label>
+            <input type="text" class="form-control"  placeholder="小区描述" name="desc"  value="{$data.desc|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="money">价格/每平米</label>
+            <input type="number" class="form-control"  placeholder="价格/每平米" name="money"  value="{$data.money|default=''}">
+        </div>
+
+        <div class="form-group">
+            <label for="see-house-time">看房时间</label>
+            <select name="see_house_time" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['see_house_time']"}{eq name="data['see_house_time']" value="有租房需要预约"}selected{/eq}{/notempty} >有租房需要预约</option>
+                <option value="2" {notempty name="data['see_house_time']"}{eq name="data['see_house_time']" value="提前预约随时可看"}selected{/eq}{/notempty} >提前预约随时可看</option>
+            </select>
+        </div>
+
+        <div class="form-group md-10">
+            <div class="col-sm-12 ml-0">
+                <label for="type">房屋户型</label>
+            </div>
+            <div class="col-sm-12">
+            <input style="width:15%;float:left;" type="number" class="form-control"  placeholder="*" name="shi" value="{$data.shi|default=''}" style="width:20%;float:left">
+             <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;室</span>
+                <input style="width:15%;float:left;" type="number" class="form-control"  placeholder="*" name="ting" value="{$data.ting|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;厅</span>
+                <input style="width:15%;float:left;" type="number" class="form-control"  placeholder="*" name="chu" value="{$data.chu|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;厨</span>
+                <input style="width:15%;float:left;" type="number" class="form-control"  placeholder="*" name="wei" value="{$data.wei|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;卫</span>
+             </div>
+           </div>
+
+        <div class="form-group md-10">
+            <div class="col-sm-12 ml-0">
+                <label for="floor">所在楼层</label>
+            </div>
+            <div class="col-sm-12">
+                <select style="width:30%;float:left;" name="floor" class="form-control">
+                    <option value="">请选择</option>
+                    <option value="1" {notempty name="data['floor']"}{eq name="data['floor']" value="底层"}selected{/eq}{/notempty} >底层</option>
+                    <option value="2" {notempty name="data['floor']"}{eq name="data['floor']" value="低楼层"}selected{/eq}{/notempty} >低楼层</option>
+                    <option value="3" {notempty name="data['floor']"}{eq name="data['floor']" value="中楼层"}selected{/eq}{/notempty} >中楼层</option>
+                    <option value="4" {notempty name="data['floor']"}{eq name="data['floor']" value="高楼层"}selected{/eq}{/notempty} >高楼层</option>
+                    <option value="5" {notempty name="data['floor']"}{eq name="data['floor']" value="顶层"}selected{/eq}{/notempty} >顶层</option>
+                </select>
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;共</span>
+                <input type="number" class="form-control"  placeholder="*" name="floor_count" value="{$data.floor_count|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;层</span>
+            </div>
+        </div>
+
+        <div class="form-group md-10">
+            <div class="col-sm-12 ml-0">
+                <label for="type">梯户比例</label>
+            </div>
+            <div class="col-sm-12">
+                <input style="width:25%;float:left;" type="number" class="form-control"  placeholder="*" name="ti" value="{$data.ti|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;梯</span>
+                <input style="width:25%;float:left;" type="number" class="form-control"  placeholder="*" name="hu" value="{$data.hu|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;户</span>
+            </div>
+        </div>
+
+        <div class="form-group md-10">
+            <div class="col-sm-12 ml-0">
+                <label for="building_acreage">建筑面积</label>
+            </div>
+            <div class="col-sm-12">
+                <input type="number" class="form-control"  placeholder="*" name="building_acreage" value="{$data.building_acreage|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;m²</span>
+            </div>
+        </div>
+
+        <div class="form-group md-10">
+            <div class="col-sm-12 ml-0">
+                <label for="inner_acreage">套内面积</label>
+            </div>
+            <div class="col-sm-12">
+                <input type="number" class="form-control"  placeholder="*" name="inner_acreage" value="{$data.building_acreage|default=''}" style="width:20%;float:left">
+                <span style="width:10%;float:left;line-height:33px;">&nbsp;&nbsp;m²</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="direction">房屋朝向</label>
+            <select name="direction" class="form-control">
+                <option value="东" {notempty name="data['direction']"}{eq name="data['direction']" value="东"}selected{/eq}{/notempty} >东</option>
+                <option value="南" {notempty name="data['direction']"}{eq name="data['direction']" value="南"}selected{/eq}{/notempty} >南</option>
+                <option value="西" {notempty name="data['direction']"}{eq name="data['direction']" value="西"}selected{/eq}{/notempty} >西</option>
+                <option value="北" {notempty name="data['direction']"}{eq name="data['direction']" value="北"}selected{/eq}{/notempty} >北</option>
+                <option value="东北" {notempty name="data['direction']"}{eq name="data['direction']" value="东北"}selected{/eq}{/notempty} >东北</option>
+                <option value="东南" {notempty name="data['direction']"}{eq name="data['direction']" value="东南"}selected{/eq}{/notempty} >东南</option>
+                <option value="西南" {notempty name="data['direction']"}{eq name="data['direction']" value="西南"}selected{/eq}{/notempty} >西南</option>
+                <option value="西北" {notempty name="data['direction']"}{eq name="data['direction']" value="西北"}selected{/eq}{/notempty} >西北</option>
+                <option value="东西" {notempty name="data['direction']"}{eq name="data['direction']" value="东西"}selected{/eq}{/notempty} >东西</option>
+                <option value="南北" {notempty name="data['direction']"}{eq name="data['direction']" value="南北"}selected{/eq}{/notempty} >南北</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="decoration">装修情况</label>
+            <select name="decoration" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['decoration']"}{eq name="data['decoration']" value="精装修"}selected{/eq}{/notempty} >精装修</option>
+                <option value="2" {notempty name="data['decoration']"}{eq name="data['decoration']" value="普通装修"}selected{/eq}{/notempty} >普通装修</option>
+                <option value="3" {notempty name="data['decoration']"}{eq name="data['decoration']" value="毛坯房"}selected{/eq}{/notempty} >毛坯房</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="heating_method">供暖方式</label>
+            <select name="heating_method" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['heating_method']"}{eq name="data['heating_method']" value="自供暖"}selected{/eq}{/notempty} >自供暖</option>
+                <option value="2" {notempty name="data['heating_method']"}{eq name="data['heating_method']" value="集体供暖"}selected{/eq}{/notempty} >集体供暖</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="family_structure">户型结构</label>
+            <select name="family_structure" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['family_structure']"}{eq name="data['family_structure']" value="平层"}selected{/eq}{/notempty} >平层</option>
+                <option value="2" {notempty name="data['family_structure']"}{eq name="data['family_structure']" value="跃层"}selected{/eq}{/notempty} >跃层</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="building_type">建筑类型</label>
+            <select name="building_type" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['building_type']"}{eq name="data['building_type']" value="塔楼"}selected{/eq}{/notempty} >塔楼</option>
+                <option value="2" {notempty name="data['building_type']"}{eq name="data['building_type']" value="板楼"}selected{/eq}{/notempty} >板楼</option>
+                <option value="3" {notempty name="data['building_type']"}{eq name="data['building_type']" value="塔板结合"}selected{/eq}{/notempty} >塔板结合</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="building_structure">建筑结构</label>
+            <select name="building_structure" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['building_structure']"}{eq name="data['building_structure']" value="钢混结构"}selected{/eq}{/notempty} >钢混结构</option>
+                <option value="2" {notempty name="data['building_structure']"}{eq name="data['building_structure']" value="钢结构"}selected{/eq}{/notempty} >钢结构</option>
+                <option value="3" {notempty name="data['building_structure']"}{eq name="data['building_structure']" value="砖混结构"}selected{/eq}{/notempty} >砖混结构</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="lift">配置电梯</label>
+            <select name="lift" class="form-control">
+                <option value="">请选择</option>
+                <option value="1" {notempty name="data['lift']"}{eq name="data['lift']" value="有"}selected{/eq}{/notempty} >有</option>
+                <option value="2" {notempty name="data['lift']"}{eq name="data['lift']" value="没有"}selected{/eq}{/notempty} >没有</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="years">产权年限</label>
+            <input type="text" class="form-control"  placeholder="请输入产权年限" name="years" value="{$data.years|default=''}">
+        </div>
+
+        <div class="form-group">
+            <div class="form-upload">
+                <div class="form-group">
+                    <input id="file-zh" name="file[]" type="file" multiple="multiple">
+                </div>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-default waves-effect waves-light" id="submit">保存</button>
+        <a  class="btn btn-danger waves-effect waves-light m-l-10"  href="/admin/selling_house/index" data-loader="true" data-title="房屋出售列表">返回</a>
+    </form>
+</div>
+<!--===================================================-->
+<link href="__ADMIN__/assets/fileup/upload/fileinput.css" media="all" rel="stylesheet" type="text/css" />
+<link rel="stylesheet" href="__ADMIN__/assets/fileup/upload/uploading.css">
+<script src="__ADMIN__/assets/fileup/upload/fileinput.js" type="text/javascript"></script>
+<script src="__ADMIN__/assets/fileup/upload/zh.js" type="text/javascript"></script>
+<script>
+
+    // 前端校验
+    var validator = new Validator('form', [
+        {
+            name: 'title',
+            display: '请输入房屋标题',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'name',
+            display: '请输入小区名称',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'money',
+            display: '请输入房屋租金',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'see-house-time',
+            display: '请选择看房时间',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'ti',
+            display: '请选择梯户比例-梯',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'hu',
+            display: '请选择梯户比例-户',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'floor',
+            display: '请选择所在楼层',
+            rules:'required',
+            width: 220
+        },
+        {
+            name: 'floor_count',
+            display: '请选择共几层',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'building_acreage',
+            display: '请选择房屋面积',
+            rules: 'required',
+            width: 220
+        },
+        {
+            name: 'inner_acreage',
+            display: '请选择套内面积',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'way',
+            display: '请选择租赁方式',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'heating_method',
+            display: '请选择供暖方式',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'decoration',
+            display: '请选择装修情况',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'family_structure',
+            display: '请选择户型结构',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'building_structure',
+            display: '请选择建筑结构',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'building_structure',
+            display: '请选择是否配置电梯',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'lift',
+            display: '请选择供暖方式',
+            rules: 'required',
+            width: 220
+        }
+        ,
+        {
+            name: 'building_type',
+            display: '请选择建筑类型',
+            rules: 'required',
+            width: 220
+        }
+    ], function (obj, evt) {
+        //如果errors具有内容则表示验证不通过
+        if (obj.errors.length) {
+            $.each(obj.errors, function (index, item) {
+                layer.tips(item.message, $('#form').find('[name="' + item.name + '"]'), {
+                    tips: [3, '#00B4E9'],
+                    tipsMore: true
+                });
+            });
+        }
+    });
+
+    /*表单提交*/
+    $('#submit').click(function(e){
+        e.preventDefault();
+        if(!validator.validate().errors.length ) {
+            var data = new FormData(document.getElementById('form'));
+            $.ajax({
+                url: "/admin/selling_house/save",
+                type: "post",
+                data: data,
+                dataType: "json",
+                contentType: false,
+                processData: false,
+                success: function (data) {
+                    if (data.status == 1) {
+                        swal({
+                            title: "保存成功",
+                            type: 'success',
+                            confirmButtonText: '确认'
+                        }, function () {
+                            $('#selling_house').click();
+                        });
+                    } else {
+                        swal(data.msg, " ", "error");
+                    }
+                }, error: function (data) {
+                    alert(3);
+                }
+
+            });
+        }
+    });
+
+    //多图上传
+    $('#file-zh').fileinput({
+        language: 'zh',
+        uploadUrl: '/admin/selling_house/successReturn',
+        allowedFileExtensions : ['jpg','jpeg', 'png','gif'],
+    });
+
+</script>

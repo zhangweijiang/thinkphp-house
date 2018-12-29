@@ -1,0 +1,38 @@
+<table id="demo-foo-filtering" data-toggle="table"
+       data-page-size="10"
+       data-pagination="true" class="table-bordered ">
+    <thead>
+    <tr>
+        <th data-checkbox="true"></th>
+        <th data-switchable="false">预约者姓名</th>
+        <th>预约者电话</th>
+        <th>房屋标题</th>
+        <th>小区名称</th>
+        <th>建筑面积</th>
+        <th>房屋售价</th>
+        <th>添加时间</th>
+        <th class="text-center">操作</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    {volist name="list" id="vo"}
+    <tr>
+        <td></td>
+        <td>{$vo.username}</td>
+        <td>{$vo.tel}</td>
+        <td>{$vo.title}</td>
+        <td>{$vo.name}</td>
+        <td>{$vo.building_acreage}m²</td>
+        <td>{$vo.money}</td>
+        <td>{$vo.add_time|date='Y-m-d',###}</td>
+        <td>
+            {if condition="$vo.status eq 0"}
+            <button class="btn btn-info status" data-id="{$vo.id}">已处理</button>
+            {/if}
+
+        </td>
+    </tr>
+    {/volist}
+    </tbody>
+</table>

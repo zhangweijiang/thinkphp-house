@@ -1,0 +1,155 @@
+{extend name="public/base" /}
+{block name="style"}
+{/block}
+{block name="body"}
+    <div class="toolHeader">
+        <div class="logoRow">
+            <div class="toolLogo"></div>
+        </div>
+        <div class="toolTitle">
+            <div class="mainTitle">发布出租房源</div>
+            <div class="subTitle">8000+全国链家门店·10万+全国中介·链家倾情服务15年+</div>
+        </div>
+    </div>
+    <div class="mainContent" style="margin-top: 0;">
+        <div class="m-form">
+            <form action="" id="form">
+                <div class="box-l m-entry clearfix">
+                    <dl>
+                        <dt>小区</dt>
+                        <dd class="wrap-sug">
+                            <div class="u-sug" id="u-sug">
+                                <input class="sugInput" name="title" type="text" placeholder="请输入小区名">
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>房屋地址</dt>
+                        <dd>
+                            <div class="u-select u-select-build" name="building">
+                                <input placeholder="楼栋号" class="u-select-selected" type="text" value="" name="building">
+                            </div>
+                            <div class="u-select u-select-build" name="unit">
+                                <input placeholder="单元号" class="u-select-selected" type="text" value="" name="unit">
+                            </div>
+                            <div class="u-select u-select-build" name="house">
+                                <input placeholder="门牌号" class="u-select-selected" type="text" value="" name="doorplate">
+                            </div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>户型</dt>
+                        <dd>
+                            <input name="house_type" value="" type="text" placeholder="请输入户型" style="width: 250px;">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>期望价格</dt>
+                        <dd>
+                            <input name="money" value="" type="text" placeholder="请输入您期望租出的价格" style="width: 210px;">
+                            <div class="unit pull-left">元/月</div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>房屋面积</dt>
+                        <dd>
+                            <input name="acreage" value="" type="text" placeholder="请输入房屋面积" style="width: 210px;">
+                            <div class="unit pull-left">m²</div>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>称呼</dt>
+                        <dd>
+                            <input name="username" value="" type="text" placeholder="我们应该如何称呼您" style="width: 250px;">
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dt>手机号码</dt>
+                        <dd>
+                            <input name="tel" value="" type="text" placeholder="您的联系方式，方便我们及时与您联系" style="width: 250px;">
+                        </dd>
+                    </dl>
+                </div>
+            </form>
+        </div>
+        <div class="m-submit">
+            <div class="wrap">
+                <div class="btn-submit">提交委托</div>
+            </div>
+        </div>
+    </div>
+   {/block}
+{block name="script"}
+<script>
+    $('.btn-submit').click(function(){
+       var title = $("input[name='title']").val();
+       var building = $("input[name='building']").val();
+       var unit = $("input[name='unit']").val();
+       var doorplate = $("input[name='doorplate']").val();
+       var money = $("input[name='money']").val();
+       var acreage = $("input[name='acreage']").val();
+       var username = $("input[name='username']").val();
+       var tel = $("input[name='tel']").val();
+       var house_type = $("input[name='house_type']").val();
+       var money_reg = /^\d{1,9}$/;
+       var  tel_reg =/^1[3|4|5|6|7|8|9][0-9]{9}$/;
+       if(title==''){
+           layer.alert('请输入小区名');
+           return false;
+       }
+       if(building==''){
+           layer.alert('请输入楼栋号');
+           return false;
+       }
+       if(doorplate==''){
+           layer.alert('请输入门牌号');
+           return false;
+       }
+       if(money==''||money=='0'){
+           layer.alert('请输入期望出租价格');
+           return false;
+       }
+       if(!money_reg.test(money)){
+           layer.alert('金额格式输入不正确');
+           return false;
+       }
+        if(acreage==''||acreage=='0'){
+            layer.alert('请输入房屋面积');
+            return false;
+        }
+        if(!money_reg.test(acreage)){
+            layer.alert('房屋面积格式输入不正确');
+            return false;
+        }
+        if(username==''){
+            layer.alert('请输入您的姓名');
+            return false;
+        }
+        if(tel==''){
+            layer.alert('请输入您的联系电话');
+            return false;
+        }
+        if(!tel_reg.test(tel)){
+            layer.alert('联系电话格式输入不正确');
+            return false;
+        }
+       $.ajax({
+           url:"{:url('pc/lease/save')}",
+           data:{title:title,building:building,unit:unit,doorplate:doorplate,money:money,username:username,tel:tel,house_type:house_type},
+           type:'post',
+           dataType:'json',
+           success:function(data){
+             if(data.status==1){
+                 layer.msg('房屋委托成功，我们将在3-5工作日联系您', {icon: 1,time:2000},function(){
+                        window.location.reload();
+                 });
+             }else{
+                 layer.msg('房屋委托失败', {icon: 1,time:2000},function(){
+                     window.location.reload();
+                 });
+             }
+           }
+       });
+    });
+</script>
+{/block}

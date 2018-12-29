@@ -1,0 +1,266 @@
+{extend name="public/base" /}
+{block name="style"}
+{/block}
+{block name="body"}
+<div class="header">
+    <div class="container">
+        <div class="row">
+            <div class="menu">
+                <div class="menuLeft">
+                    <a href="#" class="logo"></a>
+                    <!--<ul class="typeList">
+                        <li class="selected"><a href="#" title="厦门在售二手房">在售</a></li>
+                        <li><a href="#" title="厦门成交二手房">成交</a></li>
+                        <li><a href="#" title="厦门小区二手房">小区</a></li>
+                        <li><a href="#" title="厦门房价二手房">房价</a></li>
+                        <li><a href="#" title="厦门地图找房二手房" target="_blank">地图找房</a></li>
+                    </ul>-->
+                </div>
+            </div>
+            <div class="search">
+                <div class="input">
+                    <form id="searchForm" action="javascript:">
+                        <input type="text" id="searchInput" placeholder="试试输入组合条件找房，如中冶蓝城" value="{$Think.GET.search}">
+                        <div class="inputRightPart">
+                            <div class="save" id="savedSearchMsg">
+                                <span id="savedSearchCount">0</span>条已保存搜索
+                                <span id="savedSearchArrow" class="downArrow"></span>
+                            </div>
+                            <button type="submit" class="searchButton" id="btn-search">&nbsp;<i></i>&nbsp;</button>
+                        </div>
+                    </form>
+                    <div class="searchMsg" id="searchMsgContainer" style="display: none;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <div class="sellDetailHeader">
+        <div class="title-wrapper container">
+            <div class="row">
+                <div class="title">
+                    <h1 class="main" title="{$data.title}">{$data.title}</h1>
+                    <div class="sub" title="{$data.desc}">{$data.desc}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="intro container">
+        <div class="row">
+            <a href="index.html">链家网</a>
+            <span class="stp">&nbsp;&gt;&nbsp;</span>
+            <span>当前房源</span>&nbsp;
+        </div>
+    </div>
+    <div class="overview container">
+        <div class="row">
+            <div class="img" id="topImg">
+                <div class="imgContainer">
+                    <img class="new-default-icon defaultImg" src="__UPLOAD__/{$data['img'][0]['filename']}" alt="" style="display: block;">
+                </div>
+                <div class="thumbnail-img" id="thumbnail2">
+                    <div class="pre">&lt;</div>
+                    <ul class="smallpic">
+                        {volist name="data['img']" id="vo"}
+                        {if condition="$key eq 0"}
+                        <li class="selected">
+                            <img src="__UPLOAD__/{$vo.filename}" alt="">
+                        </li>
+                        {else/}
+                        <li >
+                            <img src="__UPLOAD__/{$vo.filename}" alt="">
+                        </li>
+                        {/if}
+                        {/volist}
+                    </ul>
+                    <div class="next">&gt;</div>
+                </div>
+            </div>
+            <div class="content">
+                <div class="price">
+                    <span class="total">{$data.total_money}</span>
+                    <span class="unit">
+                    <span>万</span>
+                </span>
+                    <div class="text">
+                        <div class="unitPrice">
+                        <span class="unitPriceValue">
+                            {$data.money}<i>元/平米</i>
+                        </span>
+                        </div>
+                        <!--<div class="tax">
+                        <span class="taxtext" title="首付186万 税费10万(仅供参考)">
+                            <span>首付186万 </span>
+                            <span>税费</span>
+                            <span>
+                                <span id="PanelTax">10</span>万(仅供参考)
+                            </span>
+                        </span>
+                            <span class="detail" id="lookdetail">详情</span>
+                        </div>-->
+                    </div>
+                    <div class="removeIcon"></div>
+                </div>
+                <div class="houseInfo">
+                    <div class="room">
+                        <div class="mainInfo">{$data.shi}室{$data.ting}厅</div>
+                        <div class="subInfo">{$data.floor}/共{$data.floor_count}层</div>
+                    </div>
+                    <div class="type">
+                        <div class="mainInfo" title="{$data.direction}">{$data.direction}</div>
+                        <div class="subInfo">{$data.family_structure}/{$data.decoration}</div>
+                    </div>
+                    <div class="area">
+                        <div class="mainInfo">{$data.building_acreage}平米</div>
+                        <div class="subInfo">{$data.building_type}</div>
+                    </div>
+                </div>
+                <div class="aroundInfo">
+                    <div class="communityName">
+                        <span class="label">小区名称</span>
+                        <a href="#" target="_blank" class="info ">{$data.name}</a>
+                        <!--<a href="#around" class="map">地图</a>-->
+                    </div>
+                    <!--<div class="areaName">
+                        <i></i>
+                        <span class="label">所在区域</span><span class="info">
+                        <a href="#" target="_blank">思明</a>&nbsp;
+                        <a href="#" target="_blank">金鸡亭</a>&nbsp;
+                    </span>
+                        <a href="#" class="supplement" style="color:#394043;"></a>
+                    </div>-->
+                    <div class="visitTime">
+                        <i></i>
+                        <span class="label">看房时间</span>
+                        <span class="info">{$data.see_house_time}</span>
+                    </div>
+                    <div class="houseRecord">
+                        <span class="label">链家编号</span>
+                        <span class="info">
+                        {$data.house_sn}
+                    </span>
+                    </div>
+                </div>
+                <div class="brokerInfo clearfix" style="position: relative">
+                    <a class="pull-left" target="_blank" href="#">
+                        <img src="__UPLOAD__/{$data['info']['user_img']}" alt="">
+                    </a>
+                    <div class="brokerInfoText pull-right">
+                        <div class="brokerName">
+                            <a target="_blank" href="#" class="name">
+                                {if condition="$data['info']['type'] eq 2"}
+                                        平台:{$data['info']['truename']}
+                                    {else/}
+                                        中介:{$data['info']['username']}
+                                {/if}
+                            </a>
+                            <a class="lianjiaim-createtalkAll new-talk" style="display: none;" title="在线咨询">
+                                <span class="im-icon"></span>沟通
+                            </a>
+                        </div>
+                        <div class="phone" style="font-size:18px">
+                            联系电话：{$data['info']['tel']}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-content container clearfix">
+        <div class="row">
+            <div class="box-l">
+                <div class="newwrap baseinform" id="introduction">
+                    <div style="width:700px;">
+                        <h2>
+                            <div class="title">基本信息</div>
+                        </h2>
+                        <div class="introContent">
+                            <div class="base">
+                                <div class="name">基本属性</div>
+                                <div class="content">
+                                    <ul>
+                                        <li><span class="label">房屋户型</span>{$data.shi}室{$data.ting}厅{$data.chu}厨{$data.wei}卫</li>
+                                        <li><span class="label">所在楼层</span>{$data.floor} (共{$data.floor_count}层)</li>
+                                        <li><span class="label">建筑面积</span>{$data.building_acreage|default='暂无数据'}㎡</li>
+                                        <li><span class="label">户型结构</span>{$data.family_structure|default='暂无数据'}</li>
+                                        <li><span class="label">套内面积</span>{$data.inner_acreage|default='暂无数据'}㎡</li>
+                                        <li><span class="label">建筑类型</span>{$data.building_type|default='暂无数据'}</li>
+                                        <li><span class="label">房屋朝向</span>{$data.direction|default='暂无数据'}</li>
+                                        <li><span class="label">建筑结构</span>{$data.building_structure|default='暂无数据'}</li>
+                                        <li><span class="label">装修情况</span>{$data.decoration|default='暂无数据'}</li>
+                                        <li><span class="label">梯户比例</span>{$data.ti}梯{$data.hu}户</li>
+                                        <li><span class="label">配备电梯</span>{$data.lift|default='暂无数据'}</li>
+                                        <li><span class="label">产权年限</span>{$data.years}年</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="disclaimer" style="padding-top: 10px;">注：房源所示“房屋用途、交易权属、建成年代、产权年限、建筑结构”仅供参考，购房时请以房本信息为准。</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="pushXinfang">
+        <div class="xinfangPush container">
+            <div class="row">
+                <h3 class="xinfangPushTitle">好房为您推荐</h3>
+                <ul class="xinfangPushList clearfix">
+                    {volist name="newHouseList" id="vo"}
+                        <li class="xinfangPushItem">
+                            <a class="xinfangPushPic" href="{:url('pc/second_hand_house/index')}?id={$vo.id}" data-bl="detail" data-log_id="40001">
+                                <img class="xinfangPushImg" src="__UPLOAD__/{$vo.img}" alt="{$vo.name}">
+                                <div class="xinfangPushbg"></div>
+                                <div class="xinfangPushDescription">
+                                    <div class="title" title="{$vo.name}">{$vo.name}</div>
+                                  <!--  <div class="type"><span>住宅</span></div>-->
+                                </div>
+                            </a>
+                            <div class="xinfangPushInfo">
+                                <p class="xinfangPushArea">{$vo.shi}室{$vo.ting}厅</p>
+                                <p class="xinfangPushPrice">
+                                <span class="average">
+                                    均价: <span>{$vo.money}</span> 元/平
+                                </span>
+                                </p>
+                            </div>
+                        </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="m-yezhu">
+        <div class="wrap container">
+            <div class="row">
+                <div class="hd">我有房子要卖</div>
+                <ul class="clearfix">
+                    <li class="item-gujia">
+                        <div class="marsk"></div>
+                        <div class="tit">不知道如何定价</div>
+                        <div class="sub-tit">到成交频道查看成交明细</div>
+                        <a href="#" class="btn-link" target="_blank">查成交&nbsp;&gt;</a></li>
+                    <li class="item-maifang">
+                        <div class="marsk"></div>
+                        <div class="tit">把房源委托给链家</div>
+                        <div class="sub-tit">10万+专业中介·8000+链家门店</div>
+                        <a href="#" class="btn-link" target="_blank">发布房源&nbsp;&gt;</a></li>
+                    <li class="item-xiazai">
+                        <div class="marsk"></div>
+                        <div class="tit">已有房源在链家销售</div>
+                        <div class="sub-tit">去链家APP业主中心管理委托</div>
+                        <a href="#" class="btn-link" target="_blank">去APP管理委托&nbsp;&gt;</a></li>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{/block}
+{block name="script"}
+<script>
+    $('#btn-search').click(function(){
+        var search = $('#searchInput').val();
+        window.location.href = "/pc/second_hand_house_list/index?search="+search;
+    });
+</script>
+{/block}

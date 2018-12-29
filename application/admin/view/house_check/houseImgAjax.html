@@ -1,0 +1,36 @@
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {volist name="houseImgList" id="vo"}
+        <div class="swiper-slide">
+            <img src="/upload/{$vo.filename}"/>
+        </div>
+        {/volist}
+    </div>
+    <!-- 如果需要分页器 -->
+    <!--<div class="swiper-pagination"></div>-->
+
+    <!-- 如果需要导航按钮 -->
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
+
+</div>
+
+<script type="text/javascript">
+        var mySwiper = new Swiper ('.swiper-container', {
+            // 轮播图的方向，也可以是vertical方向
+            direction:'horizontal',
+            //播放速度
+            loop: true,
+            // 自动播放时间
+            autoplay:3000,
+            // 如果需要分页器，即下面的小圆点
+            /*pagination: '.swiper-pagination',*/
+            // 如果需要前进后退按钮
+            nextButton: '.swiper-button-next',
+            prevButton: '.swiper-button-prev',
+            // 这样，即使我们滑动之后， 定时器也不会被清除
+            autoplayDisableOnInteraction : true,
+            observer:true,//修改swiper自己或子元素时，自动初始化swiper
+            observeParents:true,//修改swiper的父元素时，自动初始化swiper
+        });
+</script>
