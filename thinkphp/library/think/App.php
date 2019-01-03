@@ -373,6 +373,10 @@ class App
         // 获取控制器名
         $controller = strip_tags($result[1] ?: $config['default_controller']);
         $controller = $convert ? strtolower($controller) : $controller;
+        //ThinkPHP5框架对控制器名没有进行足够的安全检测，导致在没有开启强制路由的情况下，黑客构造特定的请求，可直接GetWebShell
+        if (!preg_match('/^[A-Za-z](\w|\.)*$/', $controller)) {
+        	throw new HttpException(404, 'controller not exists:' . $controller);
+        }
 
         // 获取操作名
         $actionName = strip_tags($result[2] ?: $config['default_action']);
