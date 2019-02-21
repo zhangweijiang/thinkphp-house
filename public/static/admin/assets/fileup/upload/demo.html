@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta name="viewport" content="width=device-width,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <meta charset="UTF-8"/>
+    <title></title>
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="fileinput.css" media="all" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="uploading.css">
+    <script src="jquery-3.1.0.js" type="text/javascript"></script>
+    <script src="fileinput.js" type="text/javascript"></script>
+    <script src="zh.js" type="text/javascript"></script>
+</head>
+<body>
+
+<form enctype="multipart/form-data">
+    <input id="file-zh" name="file-zh[]" type="file" multiple>
+</form>
+</body>
+<script>
+    $('#file-zh').fileinput({
+        language: 'zh',
+        uploadUrl: '#',
+        allowedFileExtensions : ['jpg', 'png','gif'],
+    });
+</script>
+</html>

@@ -1,0 +1,115 @@
+/* bootstrap css reset */
+h1, h2, h3, h4, h5, h6 {
+    margin: 0;
+}
+
+.text-primary {
+    color: #1C84C6;
+}
+
+.text-success {
+    color: #1AB394;
+}
+
+.text-info {
+    color: #58c0de;
+}
+
+.text-warning {
+    color: #F8AC59;
+}
+
+.text-danger {
+    color: #ED5565;
+}
+
+.bg-primary,
+a.bg-primary:hover,
+a.bg-primary:focus {
+    background-color: #1C84C6;
+}
+
+.bg-success,
+a.bg-success:hover,
+a.bg-success:focus {
+    background-color: #1AB394;
+}
+
+.bg-info,
+a.bg-info:hover,
+a.bg-info:focus {
+    background-color: #58c0de;
+}
+
+.bg-warning,
+a.bg-warning:hover,
+a.bg-warning:focus {
+    background-color: #F8AC59;
+}
+
+.bg-danger,
+a.bg-danger:hover,
+a.bg-danger:focus {
+    background-color: #ED5565;
+}
+
+.btn:focus,
+.btn:active:focus {
+    outline: none;
+}
+
+.dropdown-menu .divider {
+    margin: 4px 0px;
+}
+
+.table thead th,
+.table tbody td {
+    text-align: center;
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+    background-color: transparent;
+}
+
+.table-striped > tbody > tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+
+.btn-success:focus,
+.btn-success.focus {
+    color: #fff;
+    background-color: #14866f;
+    border-color: inherit;
+}
+
+/* dataTables css reset */
+table.dataTable {
+    margin: 0 !important;
+}
+
+/* SumoSelect Reset CSS */
+.SumoSelect {
+    width: auto;
+    height: 36px;
+    min-width: 100px;
+    line-height: 24px;
+    vertical-align: middle;
+}
+
+.SumoSelect > .CaptionCont {
+    border: 1px solid #ececec;
+}
+
+.SumoSelect.open > .CaptionCont,
+.SumoSelect:focus > .CaptionCont,
+.SumoSelect:hover > .CaptionCont {
+    box-shadow: none;
+    border-color: #ececec;
+}
+
+.SumoSelect > .optWrapper > .options li label {
+    margin-bottom: 0;
+    width: auto;
+    color: #333;
+    font-weight: normal;
+}
